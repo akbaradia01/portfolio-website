@@ -49,7 +49,7 @@ export const certificates: Certificate[] = [
   {
     id: 1,
     title: 'Sertifikat Magang',
-    issuer: 'PT Cakrawala Global Yaksa',
+    issuer: 'Kementerian Pekerjaan Umum',
     issued_date: '2025-06-30',
     image_url: '/Sertifikat_Magang.jpg',
   },
