@@ -24,18 +24,3 @@ export interface TechItem {
   category: string;
   description: string | null;
 }
-
-export interface CommentItem {
-  id: number;
-  name: string;
-  message: string;
-  image_url: string | null;
-  created_at: string;
-}
-
-export interface ContactPayload {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
