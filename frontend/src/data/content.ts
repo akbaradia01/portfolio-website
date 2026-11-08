@@ -25,23 +25,27 @@ export const techStack: TechItem[] = [
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'Sistem Informasi Sekolah',
-    description: 'Aplikasi web untuk mengelola data siswa, guru, dan nilai secara terpusat.',
+    title: 'Platform Streaming & Direktori Film',
+    description: 'Aplikasi web modern untuk menjelajahi daftar film populer, mencari informasi detail aktor, dan mengelola daftar tontonan pribadi secara interaktif.',
     image_url: '/projectwebmovies.jpeg',
-    features: ['Manajemen data siswa', 'Input & rekap nilai', 'Login multi-role'],
-    technologies: ['PHP', 'MySQL', 'Tailwind CSS'],
-    demo_url: 'https://example.vercel.app',
-    repo_url: 'https://github.com/username/project-1',
+    features: [
+      'Eksplorasi film populer & trending',
+      'Pencarian film dan detail pemeran',
+      'Manajemen daftar tontonan (Watchlist)'
+    ],
+    technologies: ['React', 'Tailwind CSS', 'TMDB API'],
   },
   {
     id: 2,
-    title: 'Landing Page Company Profile',
-    description: 'Website company profile responsif dengan animasi halus dan SEO dasar.',
+    title: 'App Chit-Chat UI/UX Design',
+    description: 'Perancangan antarmuka dan pengalaman pengguna (UI/UX) aplikasi perpesanan seluler lengkap dengan alur autentikasi dan sistem navigasi.',
     image_url: '/chit-chat.jpeg',
-    features: ['Desain responsif', 'Animasi scroll', 'Form kontak'],
-    technologies: ['React.js', 'TypeScript', 'Tailwind CSS'],
-    demo_url: 'https://example.vercel.app',
-    repo_url: 'https://github.com/username/project-2',
+    features: [
+      'Desain alur autentikasi (Splash, Sign In, Register)',
+      'Navigasi bawah (Bottom Bar) & Tab Bar interaktif',
+      'Tampilan antarmuka ruang obrolan, riwayat panggilan, & profil'
+    ],
+    technologies: ['Figma', 'UI/UX Design', 'Prototyping'],
   },
 ];
 

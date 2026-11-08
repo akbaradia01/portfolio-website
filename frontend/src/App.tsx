@@ -8,7 +8,7 @@ import Portfolio from './pages/Portfolio';
 import TechStack from './pages/TechStack';
 import Contact from './pages/Contact';
 import CustomCursor from './components/CustomCursor';
-import BackgroundMusic from './components/BackgroundMusic'; // Import pemutar musik
+import BackgroundMusic from './components/BackgroundMusic';
 import { profile } from './data/profile';
 
 function ScrollToTop() {
@@ -41,14 +41,16 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      {/* Pasang Kursor dan Musik di level root */}
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <CustomCursor />
       <BackgroundMusic />
-
       <ScrollToTop />
       
-      {/* Latar belakang pola grid */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
         <div className="grid-bg absolute inset-0" />
         <div className="absolute left-1/2 top-[-10%] h-96 w-96 -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />

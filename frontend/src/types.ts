@@ -5,8 +5,8 @@ export interface Project {
   image_url: string | null;
   features: string[];
   technologies: string[];
-  demo_url: string | null;
-  repo_url: string | null;
+  demo_url?: string | null;
+  repo_url?: string | null;
 }
 
 export interface Certificate {
