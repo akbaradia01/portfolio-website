@@ -9,7 +9,7 @@ interface Project {
   title: string;
   description: string;
   image_url?: string;
-  images?: string[];        // Array untuk menampung banyak foto step
+  images?: string[];        
   features: string[];
   technologies: string[];
   demo_url?: string;
@@ -32,8 +32,8 @@ const projectsData: Project[] = [
     image_url: "/projectwebmovies.jpeg",
     features: ["Pencarian film & aktor", "Halaman detail film", "Profil aktor & sutradara", "Desain antarmuka responsif"],
     technologies: ["React.js", "Tailwind CSS", "TypeScript"],
-    demo_url: "https://truthful-joy-production-94784455.up.railway.app",
-    repo_url: ""
+    demo_url: "", // Dikosongkan karena belum di-deploy
+    repo_url: "https://github.com/akbaradia01" // Ganti dengan link GitHub proyek film jika ada
   },
   {
     id: 2,
@@ -49,12 +49,11 @@ const projectsData: Project[] = [
     id: 3,
     title: "Aplikasi Snip.iy (URL Shortener)",
     description: "Platform web pemendek tautan (URL Shortener) yang dilengkapi dengan fitur QR Code, manajemen riwayat, dan statistik jumlah klik.",
-    // Nama file di folder public/snip.iy/ : Snip-1.jpeg sampai Snip-7.jpeg
     images: Array.from({ length: 7 }, (_, i) => `/snip.iy/Snip-${i + 1}.jpeg`),
     features: ["Pemendek URL Instan", "QR Code Generator", "Statistik Klik", "Kustomisasi URL"],
     technologies: ["React.js", "Node.js", "Tailwind CSS", "MySQL"],
-    demo_url: "",
-    repo_url: "https://github.com/username/url-shortener"
+    demo_url: "https://truthful-joy-production-94784455.up.railway.app", // <-- LINK SNIP.IY SUDAH MASUK DI SINI
+    repo_url: "https://github.com/akbaradia01/snip-iy-app" // <-- LINK GITHUB SNIP.IY SUDAH MASUK DI SINI
   }
 ];
 
@@ -117,7 +116,6 @@ function ProjectsTab() {
     <>
       <div className="grid gap-6 md:grid-cols-2">
         {projectsData.map((p) => {
-          // Mendukung array images ataupun image_url tunggal
           const imgList = p.images && p.images.length > 0 ? p.images : (p.image_url ? [p.image_url] : []);
 
           return (
@@ -211,16 +209,10 @@ function CertificatesTab() {
 
 // ================= KOMPONEN IMAGE SLIDER =================
 interface Props {
-  /** Daftar path gambar, contoh: ['/snip.iy/Snip-1.jpeg', '/snip.iy/Snip-2.jpeg'] */
   images: string[];
   alt: string;
 }
 
-/**
- * Di kartu: slider dengan panah, titik, dan swipe.
- * Saat foto diklik: galeri 3D "coverflow" — foto aktif di tengah, foto lain bertumpuk
- * miring di kiri/kanan. Ganti foto dengan panah, klik foto samping, tombol ← →, atau geser.
- */
 function ImageSlider({ images, alt }: Props) {
   const total = images.length;
   const [index, setIndex] = useState(0);
@@ -230,7 +222,6 @@ function ImageSlider({ images, alt }: Props) {
   const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
   const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
 
-  // Saat galeri terbuka: aktifkan keyboard dan kunci scroll halaman
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -273,13 +264,11 @@ function ImageSlider({ images, alt }: Props) {
     </svg>
   );
 
-  // Posisi relatif tiap foto terhadap foto aktif (melingkar): ... -2, -1, 0, 1, 2 ...
   const half = Math.floor(total / 2);
   const offsetOf = (i: number) => ((i - index + total + half) % total) - half;
 
   return (
     <>
-      {/* ===== Slider di dalam kartu ===== */}
       <div className="relative overflow-hidden bg-ink-900" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <div
           className="flex transition-transform duration-500 ease-out"
@@ -328,7 +317,6 @@ function ImageSlider({ images, alt }: Props) {
         )}
       </div>
 
-      {/* ===== Galeri 3D coverflow (di luar kartu agar tidak terpotong) ===== */}
       {open &&
         createPortal(
           <div
@@ -340,7 +328,6 @@ function ImageSlider({ images, alt }: Props) {
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
           >
-            {/* Panggung 3D */}
             <div className="pointer-events-none relative h-full w-full" style={{ perspective: '1600px' }}>
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
                 {images.map((src, i) => {
@@ -352,7 +339,7 @@ function ImageSlider({ images, alt }: Props) {
                       key={src}
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (d !== 0) setIndex(i); // klik foto samping = jadikan foto utama
+                        if (d !== 0) setIndex(i);
                       }}
                       className={`absolute w-[min(72vw,600px)] aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl shadow-black/60 ${
                         d === 0 ? 'cursor-default' : 'cursor-pointer'
