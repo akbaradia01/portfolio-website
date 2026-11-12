@@ -9,7 +9,7 @@ interface Project {
   title: string;
   description: string;
   image_url?: string;
-  images?: string[];        
+  images?: string[];        // Array untuk menampung banyak foto step
   features: string[];
   technologies: string[];
   demo_url?: string;
@@ -32,8 +32,8 @@ const projectsData: Project[] = [
     image_url: "/projectwebmovies.jpeg",
     features: ["Pencarian film & aktor", "Halaman detail film", "Profil aktor & sutradara", "Desain antarmuka responsif"],
     technologies: ["React.js", "Tailwind CSS", "TypeScript"],
-    demo_url: "", // Dikosongkan karena belum di-deploy
-    repo_url: "https://github.com/akbaradia01" // Ganti dengan link GitHub proyek film jika ada
+    demo_url: "", // Dikosongkan agar tombol Live Demo hilang
+    repo_url: ""  // Dikosongkan agar tombol Source hilang
   },
   {
     id: 2,
@@ -52,8 +52,8 @@ const projectsData: Project[] = [
     images: Array.from({ length: 7 }, (_, i) => `/snip.iy/Snip-${i + 1}.jpeg`),
     features: ["Pemendek URL Instan", "QR Code Generator", "Statistik Klik", "Kustomisasi URL"],
     technologies: ["React.js", "Node.js", "Tailwind CSS", "MySQL"],
-    demo_url: "https://truthful-joy-production-94784455.up.railway.app", // <-- LINK SNIP.IY SUDAH MASUK DI SINI
-    repo_url: "https://github.com/akbaradia01/snip-iy-app" // <-- LINK GITHUB SNIP.IY SUDAH MASUK DI SINI
+    demo_url: "https://truthful-joy-production-94784455.up.railway.app", // Link Snip.iy
+    repo_url: "" // Dikosongkan agar tombol Source hilang
   }
 ];
 
