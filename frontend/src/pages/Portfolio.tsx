@@ -32,7 +32,7 @@ const projectsData: Project[] = [
     image_url: "/projectwebmovies.jpeg",
     features: ["Pencarian film & aktor", "Halaman detail film", "Profil aktor & sutradara", "Desain antarmuka responsif"],
     technologies: ["React.js", "Tailwind CSS", "TypeScript"],
-    demo_url: "",
+    demo_url: "https://truthful-joy-production-94784455.up.railway.app",
     repo_url: ""
   },
   {
