@@ -1,114 +1,176 @@
-
-
 export default function Education() {
   return (
-    <section className="min-h-screen bg-ink-950 text-white py-12 px-6">
+    <section className="min-h-screen bg-[#0a0a0a] text-white py-24 px-6 md:px-14">
       <div className="mx-auto max-w-5xl">
+        
         {/* Header Judul Section */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-widest text-amber-500 uppercase flex items-center justify-center gap-2">
-            <span>🎓</span> EDUCATION
+        <div className="mb-16">
+          <p className="font-mono text-sm text-neutral-400 mb-2 uppercase tracking-widest">
+            // ACADEMIC
+          </p>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-white uppercase">
+            EDUCATION
           </h2>
         </div>
 
-        {/* Informasi Kampus & Gelar */}
-        <div className="bg-[#111827] p-6 rounded-2xl border border-white/10 space-y-6 backdrop-blur-md shadow-xl">
-          <div className="flex items-start gap-4">
-            {/* Logo Universitas dengan object-contain agar tidak ter-zoom */}
-            <div className="w-14 h-14 rounded-xl overflow-hidden bg-white border border-white/10 flex-shrink-0 flex items-center justify-center p-1">
-              <img 
-                src="/LOGO_UAI.jpeg" 
-                alt="Logo Universitas Al-Azhar Indonesia" 
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="flex-1">
-              <div className="flex justify-between items-baseline flex-wrap">
-                <h3 className="text-xl font-bold text-white">S1 Informatika</h3>
-                <span className="text-slate-400 font-semibold text-sm">2021 – 2026</span>
+        {/* Timeline Container */}
+        <div className="relative ml-4 md:ml-8 pl-8 md:pl-12 border-l-2 border-neutral-800 space-y-16">
+          
+          {/* ================= CARD 1: S1 UAI & SKRIPSI ================= */}
+          <div className="relative group">
+            {/* Timeline Dot */}
+            <span className="absolute -left-[41px] md:-left-[57px] top-8 w-4 h-4 rounded-full bg-white ring-4 ring-[#0a0a0a] group-hover:scale-125 transition-transform" />
+            
+            <div className="flex flex-col p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
+              
+              {/* Info Kampus */}
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
+                  <img src="/LOGO_UAI.jpeg" alt="UAI Logo" className="w-full h-full object-contain" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">S.KOM</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Bachelor of Informatics</h3>
+                  <p className="text-neutral-300 font-medium mb-1">Universitas Al-Azhar Indonesia</p>
+                  <p className="text-neutral-400 text-sm leading-relaxed">
+                    Web development, software engineering, and system design.<br/>
+                    Structured programming, problem-solving, and scalable applications.
+                  </p>
+                </div>
+                <div className="md:text-right shrink-0 mt-2 md:mt-0">
+                  <span className="font-mono text-sm text-neutral-500 bg-neutral-900 px-4 py-1.5 rounded-lg border border-neutral-800">2021 — 2026</span>
+                </div>
               </div>
-              <p className="text-slate-300">Universitas Al-Azhar Indonesia</p>
+
+              <hr className="border-neutral-800 my-8" />
+
+              {/* Detail Skripsi */}
+              <div>
+                <p className="text-xs text-neutral-500 uppercase tracking-wider font-semibold mb-4">
+                  UNDERGRADUATE THESIS PROJECT:
+                </p>
+
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-[#0a0a0a] p-6 rounded-2xl border border-neutral-800">
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h4 className="text-base md:text-lg font-bold text-white leading-relaxed uppercase">
+                      KLASIFIKASI KELULUSAN TEPAT WAKTU MAHASISWA INFORMATIKA UNIVERSITAS AL-AZHAR INDONESIA
+                    </h4>
+                    <p className="text-xs text-cyan-400 mt-3 font-mono">
+                      Machine Learning | Klasifikasi Data | Data Science
+                    </p>
+                  </div>
+
+                  {/* Foto Sidang */}
+                  <div className="inline-block rounded-xl overflow-hidden border border-neutral-700 shadow-xl bg-black/40">
+                    <img 
+                      src="/foto_sidang.jpeg" 
+                      alt="Aditia Ihsan Akbar" 
+                      className="block w-full max-w-[240px] h-auto object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* 3 Gambar Evaluasi */}
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  
+                  {/* Heatmap */}
+                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
+                    <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">
+                      Heatmap Korelasi
+                    </h5>
+                    <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                      <img 
+                        src="/Heatmap_Korelasi.png" 
+                        alt="Heatmap Korelasi" 
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Confusion Matrix */}
+                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
+                    <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">
+                      Confusion Matrix
+                    </h5>
+                    <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                      <img 
+                        src="/Confusion_Matrix.png"
+                        alt="Confusion Matrix" 
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Hasil Evaluasi */}
+                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
+                    <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">
+                      Hasil Evaluasi
+                    </h5>
+                    <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                      <img 
+                        src="/Evaluasi.png" 
+                        alt="Hasil Evaluasi" 
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <hr className="border-white/10" />
-
-          {/* Section Skripsi & Foto Diri */}
-          <div>
-            <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-3">
-              UNDERGRADUATE THESIS PROJECT:
-            </p>
-
-            {/* Bagian Judul Skripsi & Foto */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-[#0b101b] p-5 rounded-xl border border-white/5">
-              {/* Teks Judul Skripsi */}
-              <div className="flex-1 flex flex-col justify-center">
-                <h4 className="text-base md:text-lg font-bold text-white leading-relaxed uppercase">
-                  KLASIFIKASI KELULUSAN TEPAT WAKTU MAHASISWA INFORMATIKA UNIVERSITAS AL-AZHAR INDONESIA
-                </h4>
-                <p className="text-xs text-cyan-400 mt-3">
-                  Machine Learning | Klasifikasi Data | Data Science
+          {/* ================= CARD 2: SMA ================= */}
+          <div className="relative group">
+            <span className="absolute -left-[41px] md:-left-[57px] top-8 w-4 h-4 rounded-full bg-white ring-4 ring-[#0a0a0a] group-hover:scale-125 transition-transform" />
+            
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
+              <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
+                <img src="/LOGO_SMA.jpeg" alt="SMA Logo" className="w-full h-full object-contain" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">TKJ</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Senior High School</h3>
+                <p className="text-neutral-300 font-medium mb-3">SMA Bakti Idhata</p>
+                <p className="text-neutral-400 text-sm leading-relaxed">
+                  Computer networks, LAN configuration, troubleshooting, server fundamentals. Cisco tools, Debian servers, VirtualBox.
                 </p>
               </div>
-
-              {/* Foto Diri dengan Border Neon Menyesuaikan Gambar */}
-              <div className="inline-block rounded-2xl overflow-hidden border-2 border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.3)] bg-black/40">
-                <img 
-                  src="/foto_sidang.jpeg" 
-                  alt="Aditia Ihsan Akbar" 
-                  className="block w-full max-w-[280px] h-auto object-cover"
-                />
+              <div className="md:text-right shrink-0 mt-2 md:mt-0">
+                <span className="font-mono text-sm text-neutral-500 bg-neutral-900 px-4 py-1.5 rounded-lg border border-neutral-800">2018 — 2021</span>
               </div>
             </div>
-
-            {/* 3 KOLOM GAMBAR EVALUASI DENGAN EFEK INTERAKTIF (HOVER) */}
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-              
-              {/* 1. KIRI: Heatmap Korelasi */}
-              <div className="bg-[#0b101b] p-4 rounded-xl border border-white/5 flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 cursor-pointer group">
-                <h5 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center truncate w-full group-hover:text-cyan-400 transition-colors">
-                  Heatmap Korelasi Analisis
-                </h5>
-                <div className="w-full h-48 rounded-lg overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center">
-                  <img 
-                    src="/Heatmap_Korelasi.png" 
-                    alt="Heatmap Korelasi" 
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              </div>
-
-              {/* 2. TENGAH: Confusion Matrix */}
-              <div className="bg-[#0b101b] p-4 rounded-xl border border-white/5 flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 cursor-pointer group">
-                <h5 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center truncate w-full group-hover:text-cyan-400 transition-colors">
-                  Confusion Matrix
-                </h5>
-                <div className="w-full h-48 rounded-lg overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center">
-                  <img 
-                    src="/Confusion_Matrix.png"
-                    alt="Confusion Matrix" 
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              </div>
-
-              {/* 3. KANAN: Hasil Evaluasi */}
-              <div className="bg-[#0b101b] p-4 rounded-xl border border-white/5 flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/10 cursor-pointer group">
-                <h5 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center truncate w-full group-hover:text-cyan-400 transition-colors">
-                  Hasil Evaluasi RF & SVM
-                </h5>
-                <div className="w-full h-48 rounded-lg overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center">
-                  <img 
-                    src="/Evaluasi.png" 
-                    alt="Hasil Evaluasi" 
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              </div>
-
-            </div>
-
           </div>
+
+          {/* ================= CARD 3: SMP ================= */}
+          <div className="relative group">
+            <span className="absolute -left-[41px] md:-left-[57px] top-8 w-4 h-4 rounded-full bg-white ring-4 ring-[#0a0a0a] group-hover:scale-125 transition-transform" />
+            
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
+              <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
+                <img src="/LOGO_SMPN250.png" alt="SMP Logo" className="w-full h-full object-contain" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">SMP</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Junior High School</h3>
+                <p className="text-neutral-300 font-medium mb-3">SMP Negeri 250 Jakarta</p>
+                <p className="text-neutral-400 text-sm leading-relaxed">
+                  Basic computer skills, introduction to information technology, and foundational mathematics.
+                </p>
+              </div>
+              <div className="md:text-right shrink-0 mt-2 md:mt-0">
+                <span className="font-mono text-sm text-neutral-500 bg-neutral-900 px-4 py-1.5 rounded-lg border border-neutral-800">2015 — 2018</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
