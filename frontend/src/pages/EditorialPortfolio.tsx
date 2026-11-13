@@ -529,7 +529,7 @@ export default function EditorialPortfolio() {
             </div>
 
             <div>
-              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">LAYANAN</p>
+              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">SERVICES</p>
               <ul className="space-y-2.5 text-neutral-300">
                 <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>Landing Page</span></li>
                 <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>Company Profile</span></li>
@@ -540,7 +540,7 @@ export default function EditorialPortfolio() {
             </div>
 
             <div>
-              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">KONTAK</p>
+              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">CONTACT</p>
               <ul className="space-y-2.5 text-neutral-300">
                 <li>
                   <a href="https://wa.me/6281293630133" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5 focus:outline-none">

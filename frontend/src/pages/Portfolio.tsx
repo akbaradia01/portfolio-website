@@ -539,7 +539,7 @@ export default function EditorialPortfolio() {
       <section id="services" className="relative bg-[#0d0d0d] text-white py-20 px-6 md:px-14 border-t border-neutral-900">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10 flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-neutral-500">KAPABILITAS &amp; LAYANAN UTAMA</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-neutral-500">KAPABILITAS &amp; SERVICES UTAMA</span>
             <span className="font-mono text-xs text-neutral-500">STACK TECH 2026</span>
           </div>
 
@@ -557,7 +557,7 @@ export default function EditorialPortfolio() {
             <div className="p-6 rounded-2xl border border-neutral-800 bg-neutral-950/60 hover:border-neutral-700 transition">
               <span className="font-mono text-xs text-neutral-500">03</span>
               <h4 className="font-display text-2xl uppercase mt-2 text-white">API &amp; Backend</h4>
-              <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed">Arsitektur RESTful API, integrasi layanan pihak ketiga, autentikasi aman, dan optimasi database.</p>
+              <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed">Arsitektur RESTful API, integrasi SERVICES pihak ketiga, autentikasi aman, dan optimasi database.</p>
             </div>
             <div className="p-6 rounded-2xl border border-neutral-800 bg-neutral-950/60 hover:border-neutral-700 transition">
               <span className="font-mono text-xs text-neutral-500">04</span>
@@ -588,7 +588,7 @@ export default function EditorialPortfolio() {
             </div>
 
             <div>
-              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">LAYANAN</p>
+              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">SERVICES</p>
               <ul className="space-y-2.5 text-neutral-300">
                 <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>Landing Page</span></li>
                 <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>Company Profile</span></li>
@@ -599,7 +599,7 @@ export default function EditorialPortfolio() {
             </div>
 
             <div>
-              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">KONTAK</p>
+              <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">CONTACT</p>
               <ul className="space-y-2.5 text-neutral-300">
                 <li>
                   <a href="https://wa.me/6281293630133" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5">
