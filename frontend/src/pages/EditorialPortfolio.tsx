@@ -18,7 +18,7 @@ interface ProjectItem {
   repoUrl?: string;
 }
 
-// ================= DATA PROYEK (Kombinasi Proyek Aditia & Video Showcase) =================
+// ================= DATA PROYEK =================
 const projectsList: ProjectItem[] = [
   {
     id: 'snip-iy',
@@ -246,22 +246,26 @@ export default function EditorialPortfolio() {
             </span>
           </a>
 
-          {/* Sisi Tengah: Menu Links */}
+          {/* Sisi Tengah: Menu Links (SUDAH DIUBAH SESUAI ARAHAN) */}
           <div className="hidden md:flex items-center gap-3 text-xs font-bold tracking-wider uppercase text-slate-700">
-            <a href="#works" className="hover:text-black transition-colors">
-              KARYA
-            </a>
-            <span className="text-slate-300 font-normal">/</span>
-            <a href="#services" className="hover:text-black transition-colors">
-              LAYANAN
-            </a>
-            <span className="text-slate-300 font-normal">/</span>
-            <a href="#process" className="hover:text-black transition-colors">
-              PROSES
+            <a href="#hero" className="hover:text-black transition-colors">
+              HOME
             </a>
             <span className="text-slate-300 font-normal">/</span>
             <a href="#about" className="hover:text-black transition-colors">
-              TENTANG
+              ABOUT
+            </a>
+            <span className="text-slate-300 font-normal">/</span>
+            <a href="#process" className="hover:text-black transition-colors">
+              EDUCATION
+            </a>
+            <span className="text-slate-300 font-normal">/</span>
+            <a href="#works" className="hover:text-black transition-colors">
+              PORTFOLIO
+            </a>
+            <span className="text-slate-300 font-normal">/</span>
+            <a href="#services" className="hover:text-black transition-colors">
+              TECH STACK
             </a>
           </div>
 
@@ -658,11 +662,11 @@ Currently, I am open to new job opportunities and exciting project collaboration
                 MENU
               </p>
               <ul className="space-y-2.5 text-neutral-300">
-                <li><a href="#hero" className="hover:text-white transition">Beranda</a></li>
-                <li><a href="#about" className="hover:text-white transition">Tentang</a></li>
-                <li><a href="#works" className="hover:text-white transition">Karya</a></li>
-                <li><a href="#process" className="hover:text-white transition">Proses</a></li>
-                <li><a href="#contact" className="hover:text-white transition">Kontak</a></li>
+                <li><a href="#hero" className="hover:text-white transition">Home</a></li>
+                <li><a href="#about" className="hover:text-white transition">About</a></li>
+                <li><a href="#process" className="hover:text-white transition">Education</a></li>
+                <li><a href="#works" className="hover:text-white transition">Portfolio</a></li>
+                <li><a href="#services" className="hover:text-white transition">Tech Stack</a></li>
               </ul>
             </div>
 
