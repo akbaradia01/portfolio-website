@@ -3,8 +3,9 @@ import { createPortal } from 'react-dom';
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX, FiDownload } from 'react-icons/fi';
 import { FaWhatsapp, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
-// --- TAMBAHKAN IMPORT HOVERNAV DI SINI ---
+// --- IMPORT HOVERNAV & TECHSTACK DI SINI ---
 import HoverNav from '../components/HoverNav';
+import TechStack from '../components/TechStack';
 
 // --- IMPORT GAMBAR LOGO (PASTI MUNCUL) ---
 import logoUai from '../assets/LOGO_UAI.jpeg';
@@ -564,37 +565,8 @@ export default function EditorialPortfolio() {
       </section>
 
       {/* ================= 8. SERVICES & CAPABILITIES HIGHLIGHT (#services) ================= */}
-      <section id="services" className="relative bg-[#0d0d0d] text-white py-20 px-6 md:px-14 border-t border-neutral-900">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-10 flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-neutral-500">KAPABILITAS &amp; LAYANAN UTAMA</span>
-            <span className="font-mono text-xs text-neutral-500">STACK TECH 2026</span>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl border border-neutral-800 bg-neutral-950/60 hover:border-neutral-700 transition">
-              <span className="font-mono text-xs text-neutral-500">01</span>
-              <h4 className="font-display text-2xl uppercase mt-2 text-white">Full-Stack Web</h4>
-              <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed">Pengembangan aplikasi web modern dengan React, TypeScript, Node.js, dan database terstruktur.</p>
-            </div>
-            <div className="p-6 rounded-2xl border border-neutral-800 bg-neutral-950/60 hover:border-neutral-700 transition">
-              <span className="font-mono text-xs text-neutral-500">02</span>
-              <h4 className="font-display text-2xl uppercase mt-2 text-white">UI/UX Design</h4>
-              <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed">Perancangan antarmuka visual intuitif, wireframing di Figma, dan design system yang konsisten.</p>
-            </div>
-            <div className="p-6 rounded-2xl border border-neutral-800 bg-neutral-950/60 hover:border-neutral-700 transition">
-              <span className="font-mono text-xs text-neutral-500">03</span>
-              <h4 className="font-display text-2xl uppercase mt-2 text-white">API &amp; Backend</h4>
-              <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed">Arsitektur RESTful API, integrasi layanan pihak ketiga, autentikasi aman, dan optimasi database.</p>
-            </div>
-            <div className="p-6 rounded-2xl border border-neutral-800 bg-neutral-950/60 hover:border-neutral-700 transition">
-              <span className="font-mono text-xs text-neutral-500">04</span>
-              <h4 className="font-display text-2xl uppercase mt-2 text-white">Performance</h4>
-              <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed">Kecepatan loading tinggi, SEO optimal, responsive di semua ukuran layar ponsel hingga desktop.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* BAGIAN INI SUDAH DIGANTI DENGAN KOMPONEN TECHSTACK */}
+      <TechStack />
 
       {/* ================= 9. GRAND EDITORIAL FOOTER ================= */}
       <footer id="contact" className="relative bg-[#050505] text-white pt-24 pb-12 px-6 md:px-14 border-t border-white/5 overflow-hidden">

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { 
   SiHtml5, SiCss, SiJavascript, SiTypescript, 
-  SiReact, SiTailwindcss, SiPhp, SiNodedotjs, 
-  SiMysql, SiGit, SiVercel 
+  SiReact, SiTailwindcss, SiPhp, SiPython, SiNodedotjs, 
+  SiMysql, SiPostgresql, SiDocker, SiGit, SiVercel 
 } from 'react-icons/si';
 
 export default function TechStack() {
@@ -16,8 +16,11 @@ export default function TechStack() {
     { name: "React.js", icon: <SiReact className="text-[#61DAFB] text-5xl" />, desc: "Library JavaScript untuk membangun antarmuka pengguna (UI) berbasis komponen." },
     { name: "Tailwind CSS", icon: <SiTailwindcss className="text-[#06B6D4] text-5xl" />, desc: "Framework CSS utility-first untuk mempercepat styling langsung di dalam markup." },
     { name: "PHP", icon: <SiPhp className="text-[#777BB4] text-5xl" />, desc: "Bahasa pemrograman server-side untuk memproses logika backend dan database." },
+    { name: "Python", icon: <SiPython className="text-[#3776AB] text-5xl" />, desc: "Bahasa pemrograman serbaguna untuk pengembangan backend, otomatisasi, dan data science." },
     { name: "Node.js", icon: <SiNodedotjs className="text-[#339933] text-5xl" />, desc: "Runtime JavaScript agar dapat menjalankan kode JavaScript di luar browser (backend)." },
     { name: "MySQL", icon: <SiMysql className="text-[#4479A1] text-5xl" />, desc: "Sistem manajemen database relasional untuk menyimpan dan mengelola data aplikasi." },
+    { name: "PostgreSQL", icon: <SiPostgresql className="text-[#4169E1] text-5xl" />, desc: "Database relasional tingkat lanjut yang kuat dan skalabel untuk menangani data kompleks." },
+    { name: "Docker", icon: <SiDocker className="text-[#2496ED] text-5xl" />, desc: "Platform kontainerisasi untuk mengemas aplikasi dan lingkungannya agar mudah dijalankan." },
     { name: "Git", icon: <SiGit className="text-[#F05032] text-5xl" />, desc: "Version control system untuk melacak perubahan kode dan kolaborasi tim." },
     { name: "Vercel", icon: <SiVercel className="text-white text-5xl" />, desc: "Platform cloud untuk melakukan deployment aplikasi web secara instan dan cepat." }
   ];
@@ -27,12 +30,12 @@ export default function TechStack() {
   };
 
   return (
-    <section className="min-h-screen bg-[#0a0f1d] text-white py-16 px-6">
-      <div className="mx-auto max-w-5xl">
+        <section id="services" className="min-h-screen bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
+      <div className="mx-auto max-w-6xl">
         
-        {/* HEADER SECTION: Tanpa "my skills", Judul Tech Stack Neon */}
+        {/* HEADER SECTION */}
         <div className="mb-12">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
             Tech Stack
           </h1>
           <p className="text-slate-400 text-sm mt-4 max-w-2xl">
@@ -58,14 +61,14 @@ export default function TechStack() {
                   }`}
                 >
                   
-                  {/* SISI DEPAN KARTU (Ikon & Nama) */}
+                  {/* SISI DEPAN KARTU */}
                   <div className="absolute inset-0 backface-hidden w-full h-full bg-[#111827] border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-center gap-3 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-colors">
                     <div>{tech.icon}</div>
                     <span className="font-bold text-sm tracking-wide text-slate-200">{tech.name}</span>
                     <span className="text-[10px] text-cyan-400 font-mono">Klik untuk detail ↻</span>
                   </div>
 
-                  {/* SISI BELAKANG KARTU (Deskripsi) */}
+                  {/* SISI BELAKANG KARTU */}
                   <div className="absolute inset-0 backface-hidden rotate-y-180 w-full h-full bg-[#1e293b] border border-cyan-500/50 rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-lg shadow-cyan-500/20">
                     <h4 className="text-sm font-bold text-cyan-400 uppercase tracking-wider mb-2">{tech.name}</h4>
                     <p className="text-xs text-slate-200 leading-relaxed">{tech.desc}</p>

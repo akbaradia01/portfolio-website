@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Education from './pages/Education';
 import Portfolio from './pages/Portfolio';
-import TechStack from './pages/TechStack';
+import TechStack from './components/TechStack';
 import Contact from './pages/Contact';
 import EditorialPortfolio from './pages/EditorialPortfolio';
 import CustomCursor from './components/CustomCursor';
