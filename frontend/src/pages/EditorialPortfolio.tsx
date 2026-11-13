@@ -103,7 +103,6 @@ const processSteps: StepInfo[] = [
 export default function EditorialPortfolio() {
   const [activeStep, setActiveStep] = useState<ProcessStep>('define');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-  const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [hireModalOpen, setHireModalOpen] = useState(false);
 
   const carouselRef = useRef<HTMLDivElement>(null);
