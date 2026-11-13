@@ -110,6 +110,36 @@ export default function EditorialPortfolio() {
   // State untuk Tab Menu
   const [activeTab, setActiveTab] = useState<'works' | 'certificates'>('works');
 
+  // --- STATE UNTUK LOADING SCREEN ---
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Mengunci scroll saat loading
+    document.body.style.overflow = 'hidden';
+
+    const interval = setInterval(() => {
+      setLoadingProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setIsLoading(false);
+            document.body.style.overflow = 'auto'; // Mengembalikan scroll
+          }, 500); // Jeda setengah detik sebelum layar hitam hilang
+          return 100;
+        }
+        // Angka naik secara acak agar terlihat lebih natural
+        const increment = Math.floor(Math.random() * 8) + 2; 
+        return Math.min(prev + increment, 100);
+      });
+    }, 40);
+
+    return () => {
+      clearInterval(interval);
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -136,6 +166,29 @@ export default function EditorialPortfolio() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 selection:bg-black selection:text-white antialiased font-sans">
       
+      {/* --- LOADING SCREEN OVERLAY --- */}
+      {isLoading && (
+        <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#0a0a0a] text-white transition-opacity duration-700">
+          <div className="flex flex-col items-center gap-6">
+            <h1 className="font-display text-7xl md:text-9xl font-bold tracking-tighter">
+              {loadingProgress}%
+            </h1>
+            
+            {/* Garis Progress Bar */}
+            <div className="w-64 md:w-96 h-1 bg-neutral-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-white transition-all duration-75 ease-out"
+                style={{ width: `${loadingProgress}%` }}
+              />
+            </div>
+            
+            <p className="font-mono text-[10px] md:text-xs tracking-widest text-neutral-500 uppercase mt-2">
+              Initializing Experience...
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* ================= 1. FLOATING PILL NAVBAR ================= */}
       <header className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl">
         <nav className="flex items-center justify-between rounded-full bg-white/95 backdrop-blur-md px-4 py-2.5 shadow-lg shadow-black/5 border border-white/20 text-slate-900 transition-all">
@@ -204,11 +257,11 @@ export default function EditorialPortfolio() {
         </div>
 
         {/* BAGIAN FOTO */}
-        <div className="relative z-10 flex justify-center items-end w-full h-[65vh] md:h-[85vh] pointer-events-none mt-10">
+        <div className="relative z-10 flex justify-center items-center w-full h-[65vh] md:h-[85vh] pointer-events-none mt-10">
           <img
-            src="/foto_portofolio-removebg-preview.png"
+            src="/foto_portofolio-removebg-preview.png" 
             alt="Aditia Ihsan Akbar"
-            className="w-auto max-h-full object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] select-none pointer-events-auto scale-[1.2] md:scale-[1.4] origin-bottom translate-y-16 md:translate-y-24"
+            className="w-auto max-h-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] select-none pointer-events-auto scale-[1.1] md:scale-[1.3]"
           />
         </div>
 
