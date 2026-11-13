@@ -10,7 +10,7 @@ export default function Education() {
         
         {/* Header Judul Section */}
         <div className="mb-16">
-          <p className="font-mono text-sm text-neutral-400 mb-2 uppercase tracking-widest">
+          <p className="font-mono text-sm text-white mb-2 uppercase tracking-widest">
             // ACADEMIC
           </p>
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-white uppercase">
@@ -58,12 +58,13 @@ export default function Education() {
                   UNDERGRADUATE THESIS PROJECT:
                 </p>
 
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-[#0a0a0a] p-6 rounded-2xl border border-neutral-800">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-[#0a0a0a] p-6 rounded-2xl border border-white">
                   <div className="flex-1 flex flex-col justify-center">
                     <h4 className="text-base md:text-lg font-bold text-white leading-relaxed uppercase">
                       KLASIFIKASI KELULUSAN TEPAT WAKTU MAHASISWA INFORMATIKA UNIVERSITAS AL-AZHAR INDONESIA
                     </h4>
-                    <p className="text-xs text-cyan-400 mt-3 font-mono">
+                    {/* Warna Cyan diubah menjadi Putih */}
+                    <p className="text-xs text-white mt-3 font-mono">
                       Machine Learning | Klasifikasi Data | Data Science
                     </p>
                   </div>
@@ -82,11 +83,12 @@ export default function Education() {
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                   
                   {/* Heatmap */}
-                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
-                    <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">
+                  {/* Border diubah menjadi putih */}
+                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-white flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
+                    <h5 className="text-[11px] font-semibold text-white uppercase tracking-wider mb-3 text-center w-full transition-colors">
                       Heatmap Korelasi
                     </h5>
-                    <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                    <div className="w-full h-40 rounded-lg overflow-hidden border border-white/50 bg-[#111] flex items-center justify-center">
                       <img 
                         src="/Heatmap_Korelasi.png" 
                         alt="Heatmap Korelasi" 
@@ -96,11 +98,11 @@ export default function Education() {
                   </div>
 
                   {/* Confusion Matrix */}
-                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
-                    <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">
+                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-white flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
+                    <h5 className="text-[11px] font-semibold text-white uppercase tracking-wider mb-3 text-center w-full transition-colors">
                       Confusion Matrix
                     </h5>
-                    <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                    <div className="w-full h-40 rounded-lg overflow-hidden border border-white/50 bg-[#111] flex items-center justify-center">
                       <img 
                         src="/Confusion_Matrix.png"
                         alt="Confusion Matrix" 
@@ -110,11 +112,11 @@ export default function Education() {
                   </div>
 
                   {/* Hasil Evaluasi */}
-                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
-                    <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">
+                  <div className="bg-[#0a0a0a] p-4 rounded-xl border border-white flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
+                    <h5 className="text-[11px] font-semibold text-white uppercase tracking-wider mb-3 text-center w-full transition-colors">
                       Hasil Evaluasi
                     </h5>
-                    <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                    <div className="w-full h-40 rounded-lg overflow-hidden border border-white/50 bg-[#111] flex items-center justify-center">
                       <img 
                         src="/Evaluasi.png" 
                         alt="Hasil Evaluasi" 
@@ -140,12 +142,12 @@ export default function Education() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">TKJ</span>
+                  <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">IPS</span>
                 </div>
                 <h3 className="text-2xl font-bold text-white">Senior High School</h3>
                 <p className="text-neutral-300 font-medium mb-3">SMA Bakti Idhata</p>
                 <p className="text-neutral-400 text-sm leading-relaxed">
-                  Computer networks, LAN configuration, troubleshooting, server fundamentals. Cisco tools, Debian servers, VirtualBox.
+                 Critical thinking, economic and social analysis, logical problem-solving, and foundational understanding of digital tools.
                 </p>
               </div>
               <div className="md:text-right shrink-0 mt-2 md:mt-0">
@@ -170,7 +172,7 @@ export default function Education() {
                 <h3 className="text-2xl font-bold text-white">Junior High School</h3>
                 <p className="text-neutral-300 font-medium mb-3">SMP Negeri 250 Jakarta</p>
                 <p className="text-neutral-400 text-sm leading-relaxed">
-                  Basic computer skills, introduction to information technology, and foundational mathematics.
+                  Robust foundation in core studies supported by early exposure to technological tools.
                 </p>
               </div>
               <div className="md:text-right shrink-0 mt-2 md:mt-0">

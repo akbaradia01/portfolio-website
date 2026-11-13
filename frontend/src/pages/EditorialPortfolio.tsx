@@ -3,6 +3,9 @@ import { createPortal } from 'react-dom';
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX, FiDownload } from 'react-icons/fi';
 import { FaWhatsapp, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
+// --- TAMBAHKAN IMPORT HOVERNAV DI SINI ---
+import HoverNav from '../components/HoverNav';
+
 // --- IMPORT GAMBAR LOGO (PASTI MUNCUL) ---
 import logoUai from '../assets/LOGO_UAI.jpeg';
 import logoSma from '../assets/LOGO_SMA.jpeg';
@@ -68,9 +71,13 @@ const projectsList: ProjectItem[] = [
     demoUrl: '',
     repoUrl: '',
   },
+];
+
+// ================= DATA SERTIFIKAT (BARU) =================
+const certificatesList: ProjectItem[] = [
   {
     id: 'kemen-pu',
-    number: '04',
+    number: '01', 
     title: 'Kementerian PU',
     category: 'INTERNSHIP & SYSTEM ANALYSIS',
     year: '2025',
@@ -100,10 +107,24 @@ const processSteps: StepInfo[] = [
   { id: 'deliver', name: 'DELIVER', tag: '03 / CODE & DEPLOYMENT', description: 'Desain yang disetujui diterjemahkan menjadi produk yang hidup: komponen yang rapi, performa yang diuji, dan peluncuran yang didampingi sampai benar-benar berjalan di tangan pengguna.', image: '/process_deliver.jpg' },
 ];
 
+// ================= DATA GAMBAR SKRIPSI =================
+const thesisImagesData = [
+  { title: 'Heatmap Korelasi', image: '/Heatmap_Korelasi.png', desc: 'Analisis korelasi antar fitur akademik terhadap status kelulusan.' },
+  { title: 'Confusion Matrix', image: '/Confusion_Matrix.png', desc: 'Perbandingan hasil prediksi model Random Forest dan SVM.' },
+  { title: 'Hasil Evaluasi', image: '/Evaluasi.png', desc: 'Perbandingan metrik Accuracy, Precision, Recall, dan F1-Score.' },
+];
+
 export default function EditorialPortfolio() {
   const [activeStep, setActiveStep] = useState<ProcessStep>('define');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [hireModalOpen, setHireModalOpen] = useState(false);
+  
+  // State untuk Modal Skripsi
+  const [thesisModalOpen, setThesisModalOpen] = useState(false);
+  const [activeThesisIdx, setActiveThesisIdx] = useState(0);
+
+  // TAMBAHKAN STATE UNTUK TAB MENU DI SINI
+  const [activeTab, setActiveTab] = useState<'works' | 'certificates'>('works');
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -133,8 +154,8 @@ export default function EditorialPortfolio() {
       
       {/* ================= 1. FLOATING PILL NAVBAR ================= */}
       <header className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl">
-        <nav className="flex items-center justify-between rounded-full bg-white/95 backdrop-blur-md px-4 py-2.5 shadow-[0_12px_36px_rgba(0,0,0,0.12)] border border-black/5 text-slate-900 transition-all">
-          <a href="#hero" className="flex items-center gap-2.5 group">
+        <nav className="flex items-center justify-between rounded-full bg-white/95 backdrop-blur-md px-4 py-2.5 shadow-lg shadow-black/5 border border-white/20 text-slate-900 transition-all">
+          <a href="#hero" className="flex items-center gap-2.5 group focus:outline-none">
             <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-black text-white transition-transform group-hover:scale-105">
               <span className="flex items-center gap-0.5">
                 <span className="w-1 h-3.5 bg-white rounded-full animate-pulse" />
@@ -147,22 +168,20 @@ export default function EditorialPortfolio() {
             </span>
           </a>
 
-          <div className="hidden md:flex items-center gap-3 text-xs font-bold tracking-wider uppercase text-slate-700">
-            <a href="#hero" className="hover:text-black transition-colors">HOME</a>
-            <span className="text-slate-300 font-normal">/</span>
-            <a href="#about" className="hover:text-black transition-colors">ABOUT</a>
-            <span className="text-slate-300 font-normal">/</span>
-            <a href="#education" className="hover:text-black transition-colors">EDUCATION</a>
-            <span className="text-slate-300 font-normal">/</span>
-            <a href="#works" className="hover:text-black transition-colors">PORTFOLIO</a>
-            <span className="text-slate-300 font-normal">/</span>
-            <a href="#services" className="hover:text-black transition-colors">TECH STACK</a>
-          </div>
+          <HoverNav
+            items={[
+              { href: '#hero', label: 'HOME' },
+              { href: '#about', label: 'ABOUT' },
+              { href: '#education', label: 'EDUCATION' },
+              { href: '#works', label: 'PORTFOLIO' },
+              { href: '#services', label: 'TECH STACK' },
+            ]}
+          />
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setHireModalOpen(true)}
-              className="inline-flex items-center justify-center rounded-full border border-slate-950 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-950 transition hover:bg-slate-950 hover:text-white"
+              className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-800 transition hover:bg-slate-100 hover:border-slate-400 focus:outline-none"
             >
               HIRE ME
             </button>
@@ -199,15 +218,15 @@ export default function EditorialPortfolio() {
           </div>
         </div>
 
-        {/* BAGIAN FOTO YANG DIPERBAIKI */}
-        <div className="relative z-10 flex justify-center items-end h-[60vh] sm:h-[70vh] md:h-[80vh] pointer-events-none -mb-4 md:-mb-10">
-          <div className="relative h-full flex items-end justify-center pointer-events-auto">
-            <img
-              src="/aditia_cutout.png"
-              alt="Aditia Ihsan Akbar"
-              className="w-auto max-h-[75vh] md:max-h-[85vh] object-contain object-bottom contrast-[1.1] brightness-[1.05] filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.2)] select-none"
-            />
-          </div>
+        {/* BAGIAN FOTO */}
+                {/* BAGIAN FOTO */}
+                {/* BAGIAN FOTO */}
+        <div className="relative z-10 flex justify-center items-end w-full h-[65vh] md:h-[85vh] pointer-events-none mt-10">
+          <img
+            src="/foto_portofolio-removebg-preview.png"
+            alt="Aditia Ihsan Akbar"
+            className="w-auto max-h-full object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] select-none pointer-events-auto scale-[1.4] md:scale-[1.8] origin-bottom translate-y-10 md:translate-y-16"
+          />
         </div>
 
         <div className="relative z-20 flex justify-end max-w-6xl mx-auto w-full">
@@ -227,19 +246,19 @@ export default function EditorialPortfolio() {
 
           <div className="grid md:grid-cols-12 gap-10 items-start">
             <div className="md:col-span-5">
-              <h2 className="font-display text-8xl sm:text-9xl md:text-[11rem] leading-none uppercase tracking-tighter text-white">
+              <h2 className="font-display text-8xl sm:text-9xl md:text-[11rem] leading-none uppercase tracking-tighter text-white transition-all duration-500 hover:text-white hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.6)] cursor-default select-none">
                 /ABOUT
               </h2>
               <div className="mt-4 text-6xl md:text-8xl text-neutral-600 font-light select-none">↗</div>
             </div>
 
             <div className="md:col-span-7 md:pt-6">
-              <blockquote className="text-lg md:text-2xl font-light text-neutral-200 leading-relaxed">
-                &ldquo;Hello! I'm Aditia Ihsan Akbar, a Computer Engineering graduate from Al-Azhar University Indonesia.
-                <br/><br/>
-                I'm deeply focused on Frontend & Backend Development, Product Design, and exploring Data Science & Machine Learning.
-                <br/><br/>
-                Currently, I am open to new job opportunities and exciting project collaborations.&rdquo;
+              <blockquote className="text-lg md:text-2xl font-light text-neutral-200 leading-relaxed min-h-[260px]">
+                <Typewriter 
+                  text={`"Hello! I'm Aditia Ihsan Akbar, a Computer Engineering graduate from Al-Azhar University Indonesia.\n\nI'm deeply focused on Frontend & Backend Development, Product Design, and exploring Data Science & Machine Learning.\n\nCurrently, I am open to new job opportunities and exciting project collaborations."`}
+                  speed={25}
+                  startDelay={500}
+                />
               </blockquote>
 
               <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -263,7 +282,7 @@ export default function EditorialPortfolio() {
 
           <div className="mb-16">
             <p className="font-mono text-sm text-white mb-2 uppercase tracking-widest">// ACADEMIC</p>
-            <h2 className="font-display text-8xl sm:text-9xl md:text-[11rem] leading-none uppercase tracking-tighter text-white">
+            <h2 className="font-display text-8xl sm:text-9xl md:text-[11rem] leading-none uppercase tracking-tighter text-white transition-all duration-500 hover:text-white hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.6)] cursor-default select-none">
               /EDUCATION
             </h2>
           </div>
@@ -298,48 +317,45 @@ export default function EditorialPortfolio() {
 
                 <hr className="border-neutral-800 my-8" />
 
+                {/* SKRIPSI SECTION */}
                 <div>
                   <p className="text-xs text-neutral-500 uppercase tracking-wider font-semibold mb-4">
                     UNDERGRADUATE THESIS PROJECT:
                   </p>
 
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-[#0a0a0a] p-6 rounded-2xl border border-neutral-800">
-                    <div className="flex-1 flex flex-col justify-center">
+                  <div className="flex flex-col bg-[#0a0a0a] p-6 rounded-2xl border border-neutral-800">
+                    <div className="flex-1 flex flex-col justify-center mb-6">
                       <h4 className="text-base md:text-lg font-bold text-white leading-relaxed uppercase">
                         KLASIFIKASI KELULUSAN TEPAT WAKTU MAHASISWA INFORMATIKA UNIVERSITAS AL-AZHAR INDONESIA
                       </h4>
-                      <p className="text-xs text-cyan-400 mt-3 font-mono">
+                      <p className="text-xs text-white mt-3 font-mono">
                         Machine Learning | Klasifikasi Data | Data Science
                       </p>
                     </div>
 
-                    <div className="inline-block rounded-xl overflow-hidden border border-neutral-700 shadow-xl bg-black/40">
-                      <img 
-                        src="/foto_sidang.jpeg" 
-                        alt="Aditia Ihsan Akbar" 
-                        className="block w-full max-w-[240px] h-auto object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
-                      <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">Heatmap Korelasi</h5>
-                      <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
-                        <img src="/Heatmap_Korelasi.png" alt="Heatmap" className="w-full h-full object-contain" />
-                      </div>
-                    </div>
-                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
-                      <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">Confusion Matrix</h5>
-                      <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
-                        <img src="/Confusion_Matrix.png" alt="Confusion Matrix" className="w-full h-full object-contain" />
-                      </div>
-                    </div>
-                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
-                      <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">Hasil Evaluasi</h5>
-                      <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
-                        <img src="/Evaluasi.png" alt="Evaluasi" className="w-full h-full object-contain" />
-                      </div>
+                    {/* 3 Gambar Evaluasi (Bisa diklik) */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {thesisImagesData.map((item, idx) => (
+                        <div 
+                          key={idx}
+                          onClick={() => {
+                            setActiveThesisIdx(idx);
+                            setThesisModalOpen(true);
+                          }}
+                          className="bg-[#0a0a0a] p-4 rounded-xl border border-white flex flex-col items-center transition-all duration-300 hover:-translate-y-2 hover:border-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] cursor-pointer group"
+                        >
+                          <h5 className="text-[11px] font-semibold text-white uppercase tracking-wider mb-3 text-center w-full transition-colors">
+                            {item.title}
+                          </h5>
+                          <div className="w-full h-40 rounded-lg overflow-hidden border border-white/50 bg-[#111] flex items-center justify-center">
+                            <img 
+                              src={item.image} 
+                              alt={item.title} 
+                              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" 
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -355,12 +371,12 @@ export default function EditorialPortfolio() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">TKJ</span>
+                    <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">IPS</span>
                   </div>
                   <h3 className="text-2xl font-bold text-white">Senior High School</h3>
                   <p className="text-neutral-300 font-medium mb-3">SMA Bakti Idhata</p>
                   <p className="text-neutral-400 text-sm leading-relaxed">
-                    Computer networks, LAN configuration, troubleshooting, server fundamentals. Cisco tools, Debian servers, VirtualBox.
+                   Critical thinking, economic and social analysis, logical problem-solving, and foundational understanding of digital tools.
                   </p>
                 </div>
                 <div className="md:text-right shrink-0 mt-2 md:mt-0">
@@ -383,7 +399,7 @@ export default function EditorialPortfolio() {
                   <h3 className="text-2xl font-bold text-white">Junior High School</h3>
                   <p className="text-neutral-300 font-medium mb-3">SMP Negeri 250 Jakarta</p>
                   <p className="text-neutral-400 text-sm leading-relaxed">
-                    Basic computer skills, introduction to information technology, and foundational mathematics.
+                    Robust foundation in core studies supported by early exposure to technological tools.
                   </p>
                 </div>
                 <div className="md:text-right shrink-0 mt-2 md:mt-0">
@@ -408,7 +424,7 @@ export default function EditorialPortfolio() {
         </div>
       </div>
 
-      {/* ================= 6. SELECTED WORKS SECTION (DENGAN 3D SLIDER) ================= */}
+      {/* ================= 6. SELECTED WORKS & CERTIFICATES SECTION ================= */}
       <section id="works" className="relative bg-[#f8f8fa] text-slate-950 py-24 md:py-32 px-6 md:px-14 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-4">
@@ -417,18 +433,18 @@ export default function EditorialPortfolio() {
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div className="max-w-2xl">
-              <h2 className="font-display text-8xl sm:text-9xl md:text-[11rem] leading-none uppercase tracking-tighter text-slate-950">
-                /WORKS
+              <h2 className="font-display text-8xl sm:text-9xl md:text-[11rem] leading-none uppercase tracking-tighter text-slate-950 transition-all duration-500 hover:text-white hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.4)] cursor-default select-none">
+                /PORTFOLIO
               </h2>
               <p className="mt-4 text-base md:text-xl text-slate-700 font-light leading-relaxed">
-                Aditia membawa nilai nyata di setiap proyek — konsisten melampaui ekspektasi klien dan menaikkan standar baru di dunia freelance design &amp; development.
+                Transforming complex ideas into tangible digital products. Focused on scalability, performance, and user experience.
               </p>
             </div>
 
             <div className="shrink-0 flex justify-start md:justify-end">
               <button
                 onClick={() => setHireModalOpen(true)}
-                className="w-28 h-28 md:w-36 md:h-36 rounded-full border border-slate-300 flex flex-col items-center justify-center text-xs md:text-sm font-bold tracking-widest uppercase hover:bg-black hover:text-white hover:border-black transition-all duration-300 shadow-sm group"
+                className="w-28 h-28 md:w-36 md:h-36 rounded-full border border-slate-300 flex flex-col items-center justify-center text-xs md:text-sm font-bold tracking-widest uppercase hover:bg-slate-200 hover:text-black hover:border-slate-400 transition-all duration-300 shadow-sm group focus:outline-none"
               >
                 <span>GET IN</span>
                 <span>TOUCH</span>
@@ -437,21 +453,41 @@ export default function EditorialPortfolio() {
             </div>
           </div>
 
+          {/* TAB MENU UI */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-8">
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">SELECTED WORKS</span>
+            <div className="flex gap-8">
+              <button 
+                onClick={() => setActiveTab('works')}
+                className={`font-mono text-xs font-bold uppercase tracking-widest transition-all pb-2 border-b-2 ${
+                  activeTab === 'works' ? 'text-slate-900 border-slate-900' : 'text-slate-400 border-transparent hover:text-slate-600'
+                }`}
+              >
+                SELECTED WORKS
+              </button>
+              <button 
+                onClick={() => setActiveTab('certificates')}
+                className={`font-mono text-xs font-bold uppercase tracking-widest transition-all pb-2 border-b-2 ${
+                  activeTab === 'certificates' ? 'text-slate-900 border-slate-900' : 'text-slate-400 border-transparent hover:text-slate-600'
+                }`}
+              >
+                CERTIFICATES
+              </button>
+            </div>
+
             <div className="flex items-center gap-2">
-              <button onClick={() => scrollCarousel('left')} className="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 hover:border-black hover:bg-black hover:text-white transition">
+              <button onClick={() => scrollCarousel('left')} className="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 hover:border-slate-400 hover:bg-slate-200 hover:text-black transition focus:outline-none">
                 <FiChevronLeft size={16} />
               </button>
-              <button onClick={() => scrollCarousel('right')} className="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 hover:border-black hover:bg-black hover:text-white transition">
+              <button onClick={() => scrollCarousel('right')} className="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 hover:border-slate-400 hover:bg-slate-200 hover:text-black transition focus:outline-none">
                 <FiChevronRight size={16} />
               </button>
             </div>
           </div>
 
+          {/* CAROUSEL DINAMIS */}
           <div ref={carouselRef} onScroll={handleCarouselScroll} className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-6 pt-2">
-            {projectsList.map((item) => (
-              <article key={item.id} onClick={() => setSelectedProject(item)} className="w-[280px] sm:w-[320px] md:w-[360px] shrink-0 cursor-pointer group select-none">
+            {(activeTab === 'works' ? projectsList : certificatesList).map((item) => (
+              <article key={item.id} onClick={() => setSelectedProject(item)} className="w-[280px] sm:w-[320px] md:w-[360px] shrink-0 cursor-pointer group select-none focus:outline-none animate-fadeUp">
                 <div className="relative aspect-[16/11] overflow-hidden rounded-2xl bg-neutral-900 border border-slate-200 shadow-sm transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
                   <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   <span className="absolute top-3 left-3 font-display text-lg text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{item.number}</span>
@@ -491,7 +527,7 @@ export default function EditorialPortfolio() {
                       key={s.id}
                       onClick={() => setActiveStep(s.id)}
                       aria-label={`Pilih tahap ${s.name}`}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${activeStep === s.id ? 'bg-white scale-125 ring-4 ring-white/20' : 'bg-neutral-700 hover:bg-neutral-500'}`}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none ${activeStep === s.id ? 'bg-white scale-125 ring-4 ring-white/20' : 'bg-neutral-700 hover:bg-neutral-500'}`}
                     />
                   ))}
                 </div>
@@ -504,7 +540,7 @@ export default function EditorialPortfolio() {
                         key={s.id}
                         onClick={() => setActiveStep(s.id)}
                         onMouseEnter={() => setActiveStep(s.id)}
-                        className={`text-left font-display text-6xl sm:text-7xl md:text-8xl uppercase tracking-tighter leading-none transition-all duration-300 ${isActive ? 'text-white translate-x-2' : 'text-neutral-700 hover:text-neutral-400'}`}
+                        className={`text-left font-display text-6xl sm:text-7xl md:text-8xl uppercase tracking-tighter leading-none transition-all duration-300 focus:outline-none ${isActive ? 'text-white translate-x-2' : 'text-neutral-700 hover:text-neutral-400'}`}
                       >
                         {s.name}
                       </button>
@@ -573,22 +609,22 @@ export default function EditorialPortfolio() {
             <div>
               <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">MENU</p>
               <ul className="space-y-2.5 text-neutral-300">
-                <li><a href="#hero" className="hover:text-white transition">Home</a></li>
-                <li><a href="#about" className="hover:text-white transition">About</a></li>
-                <li><a href="#education" className="hover:text-white transition">Education</a></li>
-                <li><a href="#works" className="hover:text-white transition">Portfolio</a></li>
-                <li><a href="#services" className="hover:text-white transition">Tech Stack</a></li>
+                <li><a href="#hero" className="hover:text-white transition focus:outline-none">Home</a></li>
+                <li><a href="#about" className="hover:text-white transition focus:outline-none">About</a></li>
+                <li><a href="#education" className="hover:text-white transition focus:outline-none">Education</a></li>
+                <li><a href="#works" className="hover:text-white transition focus:outline-none">Portfolio</a></li>
+                <li><a href="#services" className="hover:text-white transition focus:outline-none">Tech Stack</a></li>
               </ul>
             </div>
 
             <div>
               <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">LAYANAN</p>
               <ul className="space-y-2.5 text-neutral-300">
-                <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>Landing Page</span></li>
-                <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>Company Profile</span></li>
-                <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>E-Commerce</span></li>
-                <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>Web App</span></li>
-                <li><span className="hover:text-white cursor-pointer" onClick={() => setHireModalOpen(true)}>UI/UX Design</span></li>
+                <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>Landing Page</span></li>
+                <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>Company Profile</span></li>
+                <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>E-Commerce</span></li>
+                <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>Web App</span></li>
+                <li><span className="hover:text-white cursor-pointer focus:outline-none" onClick={() => setHireModalOpen(true)}>UI/UX Design</span></li>
               </ul>
             </div>
 
@@ -596,22 +632,22 @@ export default function EditorialPortfolio() {
               <p className="font-mono uppercase tracking-widest text-neutral-500 mb-4">KONTAK</p>
               <ul className="space-y-2.5 text-neutral-300">
                 <li>
-                  <a href="https://wa.me/6281293630133" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5">
+                  <a href="https://wa.me/6281293630133" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5 focus:outline-none">
                     WhatsApp <FiArrowUpRight size={12} className="text-neutral-500" />
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/akbaraditiaihsan?srtk=YWZsbGJnaXJ2MnR0&utm_source=qr" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5">
+                  <a href="https://www.instagram.com/akbaraditiaihsan?srtk=YWZsbGJnaXJ2MnR0&utm_source=qr" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5 focus:outline-none">
                     Instagram <FiArrowUpRight size={12} className="text-neutral-500" />
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/in/aditia-ihsan-akbar-81a7b3448/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5">
+                  <a href="https://www.linkedin.com/in/aditia-ihsan-akbar-81a7b3448/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition flex items-center gap-1.5 focus:outline-none">
                     LinkedIn <FiArrowUpRight size={12} className="text-neutral-500" />
                   </a>
                 </li>
                 <li>
-                  <button onClick={() => setHireModalOpen(true)} className="hover:text-white transition flex items-center gap-1.5 text-left">
+                  <button onClick={() => setHireModalOpen(true)} className="hover:text-white transition flex items-center gap-1.5 text-left focus:outline-none">
                     Form proyek <FiArrowUpRight size={12} className="text-neutral-500" />
                   </button>
                 </li>
@@ -624,7 +660,7 @@ export default function EditorialPortfolio() {
                 Freelance full stack developer. Dari papan tulis kosong sampai rilis, dikerjakan sendiri dari ujung ke ujung.
               </p>
               <div className="mt-4">
-                <a href="/path-to-cv.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-white font-mono uppercase tracking-wider underline hover:text-neutral-300">
+                <a href="/path-to-cv.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-white font-mono uppercase tracking-wider underline hover:text-neutral-300 focus:outline-none">
                   <FiDownload size={13} /> Unduh Resume (CV)
                 </a>
               </div>
@@ -652,11 +688,20 @@ export default function EditorialPortfolio() {
         <ModalProject project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}
 
+      {/* ================= MODAL 3D SLIDER SKRIPSI (BARU) ================= */}
+      {thesisModalOpen && (
+        <ThesisModal 
+          images={thesisImagesData} 
+          initialIndex={activeThesisIdx} 
+          onClose={() => setThesisModalOpen(false)} 
+        />
+      )}
+
       {/* ================= MODAL "HIRE ME" ================= */}
       {hireModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4" role="dialog" aria-modal="true" onClick={() => setHireModalOpen(false)}>
           <div className="relative w-full max-w-lg rounded-3xl bg-neutral-950 border border-neutral-800 text-white shadow-2xl p-6 sm:p-8" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setHireModalOpen(false)} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-300 hover:text-white transition" aria-label="Tutup">
+            <button onClick={() => setHireModalOpen(false)} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-300 hover:text-white transition focus:outline-none" aria-label="Tutup">
               <FiX size={18} />
             </button>
             <span className="font-mono text-xs uppercase tracking-widest text-emerald-400 flex items-center gap-1.5">
@@ -665,7 +710,7 @@ export default function EditorialPortfolio() {
             <h3 className="font-display text-4xl uppercase tracking-tight mt-1">Let&apos;s Work Together</h3>
             <p className="mt-2 text-sm text-neutral-400 font-light leading-relaxed">Punya ide proyek, kebutuhan pembuatan web, atau tawaran kerja sama? Hubungi saya langsung melalui saluran berikut:</p>
             <div className="mt-6 space-y-3">
-              <a href="https://wa.me/6281293630133?text=Halo%20Aditia,%20saya%20tertarik%20untuk%20bekerja%20sama%20dengan%20Anda." target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition group">
+              <a href="https://wa.me/6281293630133?text=Halo%20Aditia,%20saya%20tertarik%20untuk%20bekerja%20sama%20dengan%20Anda." target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 transition group focus:outline-none">
                 <div className="flex items-center gap-3">
                   <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400"><FaWhatsapp size={20} /></span>
                   <div>
@@ -675,7 +720,7 @@ export default function EditorialPortfolio() {
                 </div>
                 <FiArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </a>
-              <a href="mailto:aditiaakbar44@gmail.com?subject=Tawaran%20Proyek%20/%20Kerjasama" className="flex items-center justify-between p-4 rounded-2xl border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 transition group">
+              <a href="mailto:aditiaakbar44@gmail.com?subject=Tawaran%20Proyek%20/%20Kerjasama" className="flex items-center justify-between p-4 rounded-2xl border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 transition group focus:outline-none">
                 <div className="flex items-center gap-3">
                   <span className="p-2 rounded-xl bg-neutral-800 text-white">✉</span>
                   <div>
@@ -685,7 +730,7 @@ export default function EditorialPortfolio() {
                 </div>
                 <FiArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </a>
-              <a href="https://www.linkedin.com/in/aditia-ihsan-akbar-81a7b3448/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-2xl border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 transition group">
+              <a href="https://www.linkedin.com/in/aditia-ihsan-akbar-81a7b3448/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-2xl border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 transition group focus:outline-none">
                 <div className="flex items-center gap-3">
                   <span className="p-2 rounded-xl bg-neutral-800 text-blue-400"><FaLinkedinIn size={18} /></span>
                   <div>
@@ -696,7 +741,7 @@ export default function EditorialPortfolio() {
                 <FiArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </a>
             </div>
-            <button onClick={() => setHireModalOpen(false)} className="mt-6 w-full py-2.5 rounded-full border border-neutral-800 text-xs font-mono uppercase text-neutral-400 hover:text-white transition">Kembali ke Portofolio</button>
+            <button onClick={() => setHireModalOpen(false)} className="mt-6 w-full py-2.5 rounded-full border border-neutral-800 text-xs font-mono uppercase text-neutral-400 hover:text-white transition focus:outline-none">Kembali ke Portofolio</button>
           </div>
         </div>
       )}
@@ -705,7 +750,7 @@ export default function EditorialPortfolio() {
   );
 }
 
-// ================= KOMPONEN MODAL PROYEK (3D COVERFLOW SLIDER) =================
+// ================= KOMPONEN MODAL 3D SLIDER PROYEK =================
 function ModalProject({ project, onClose }: { project: ProjectItem; onClose: () => void }) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -744,7 +789,7 @@ function ModalProject({ project, onClose }: { project: ProjectItem; onClose: () 
   const half = Math.floor(total / 2);
   const offsetOf = (i: number) => ((i - index + total + half) % total) - half;
 
-  const arrowClass = "absolute top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-3.5 text-white backdrop-blur transition hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400";
+  const arrowClass = "absolute top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-3.5 text-white backdrop-blur transition hover:bg-black/80 focus:outline-none";
 
   const ArrowLeft = (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -840,16 +885,16 @@ function ModalProject({ project, onClose }: { project: ProjectItem; onClose: () 
           
           <div className="flex flex-wrap gap-3 shrink-0">
             {project.demoUrl && (
-              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 transition">
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 transition focus:outline-none">
                 Live Demo <FiArrowUpRight size={14} />
               </a>
             )}
             {project.repoUrl && (
-              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 text-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition">
+              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 text-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition focus:outline-none">
                 Source Code <FaGithub size={14} />
               </a>
             )}
-            <button onClick={onClose} className="rounded-full border border-neutral-800 px-5 py-2.5 text-xs font-mono uppercase text-neutral-400 hover:text-white transition">
+            <button onClick={onClose} className="rounded-full border border-neutral-800 px-5 py-2.5 text-xs font-mono uppercase text-neutral-400 hover:text-white transition focus:outline-none">
               Tutup
             </button>
           </div>
@@ -857,5 +902,153 @@ function ModalProject({ project, onClose }: { project: ProjectItem; onClose: () 
       </div>
     </div>,
     document.body
+  );
+}
+
+// ================= KOMPONEN MODAL 3D SLIDER SKRIPSI (BARU) =================
+function ThesisModal({ 
+  images, 
+  initialIndex, 
+  onClose 
+}: { 
+  images: { title: string; image: string; desc: string }[]; 
+  initialIndex: number; 
+  onClose: () => void; 
+}) {
+  const [index, setIndex] = useState(initialIndex);
+  const touchStartX = useRef<number | null>(null);
+
+  const total = images.length;
+  const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') prev();
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = oldOverflow;
+    };
+  }, [prev, next, onClose]);
+
+  const onTouchStart = (e: React.TouchEvent) => touchStartX.current = e.touches[0].clientX;
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+    touchStartX.current = null;
+  };
+
+  const half = Math.floor(total / 2);
+  const offsetOf = (i: number) => ((i - index + total + half) % total) - half;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,#1d0f3a_0%,#07040f_75%)]"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      <div className="pointer-events-none relative h-full w-full" style={{ perspective: '1600px' }}>
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+          {images.map((item, i) => {
+            const d = offsetOf(i);
+            const a = Math.abs(d);
+            const visible = a <= 2;
+            return (
+              <div
+                key={item.image}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (d !== 0) setIndex(i);
+                }}
+                className={`absolute w-[min(85vw,800px)] overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl shadow-black/60 p-4 ${
+                  d === 0 ? 'cursor-default' : 'cursor-pointer'
+                }`}
+                style={{
+                  transform: `translateX(${d * 100}%) translateZ(${-a * 200}px) rotateY(${-d * 38}deg) scale(${1 - a * 0.06})`,
+                  opacity: visible ? 1 : 0,
+                  filter: `brightness(${Math.max(0.25, 1 - a * 0.42)})`,
+                  zIndex: 20 - a,
+                  pointerEvents: visible ? 'auto' : 'none',
+                  transition: 'transform .6s cubic-bezier(.22,.8,.3,1), opacity .6s, filter .6s',
+                }}
+                aria-hidden={d !== 0}
+              >
+                <div className="text-center mb-4">
+                  <h3 className="text-xl font-bold text-white uppercase">{item.title}</h3>
+                  <p className="text-sm text-neutral-400">{item.desc}</p>
+                </div>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  draggable={false}
+                  className="w-full h-auto max-h-[60vh] object-contain rounded-lg border border-white/5 bg-[#111]"
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {total > 1 && (
+        <>
+          <button type="button" onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-4 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-3 text-white hover:bg-black/80 focus:outline-none"><FiChevronLeft size={24} /></button>
+          <button type="button" onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-3 text-white hover:bg-black/80 focus:outline-none"><FiChevronRight size={24} /></button>
+        </>
+      )}
+      <button onClick={onClose} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 rounded-full bg-white text-black px-6 py-2 text-sm font-bold uppercase tracking-wider hover:bg-neutral-200 transition focus:outline-none">
+        Tutup
+      </button>
+    </div>,
+    document.body
+  );
+}
+
+// ================= KOMPONEN EFEK MENGETIK (TYPEWRITER) =================
+function Typewriter({ text, speed = 25, startDelay = 500 }: { text: string; speed?: number; startDelay?: number }) {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    let intervalId: ReturnType<typeof setInterval>;
+    setIsTyping(true);
+    setDisplayedText('');
+
+    const delayTimeout = setTimeout(() => {
+      intervalId = setInterval(() => {
+        if (i < text.length) {
+          i++;
+          // PERBAIKAN: Menggunakan slice agar huruf tidak ada yang terlewat
+          setDisplayedText(text.slice(0, i)); 
+        } else {
+          clearInterval(intervalId);
+          setIsTyping(false);
+        }
+      }, speed);
+    }, startDelay);
+
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(delayTimeout);
+    };
+  }, [text, speed, startDelay]);
+
+  return (
+    <span className="whitespace-pre-line">
+      {displayedText}
+      {isTyping && (
+        <span className="inline-block w-2 h-5 bg-white ml-1 animate-pulse align-middle" />
+      )}
+    </span>
   );
 }

@@ -26,7 +26,7 @@ export default function IDCard() {
         {/* Body Kartu Utama */}
         <div className="relative -mt-1 overflow-hidden rounded-3xl border border-white/15 bg-gradient-to-br from-ink-700 to-ink-900 p-5 shadow-2xl shadow-accent/10">
           
-          {/* Efek pendaran cahaya di latar belakang */}
+          {/* Efek pendaran cahaya di Robust foundation in core studies supported by early exposure to technological tools.belakang */}
           <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-accent/20 blur-2xl" />
           <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-accent-violet/20 blur-2xl" />
 
