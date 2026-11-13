@@ -123,7 +123,7 @@ export default function EditorialPortfolio() {
   const [thesisModalOpen, setThesisModalOpen] = useState(false);
   const [activeThesisIdx, setActiveThesisIdx] = useState(0);
 
-  // TAMBAHKAN STATE UNTUK TAB MENU DI SINI
+  // State untuk Tab Menu
   const [activeTab, setActiveTab] = useState<'works' | 'certificates'>('works');
 
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -219,13 +219,11 @@ export default function EditorialPortfolio() {
         </div>
 
         {/* BAGIAN FOTO */}
-                {/* BAGIAN FOTO */}
-                {/* BAGIAN FOTO */}
         <div className="relative z-10 flex justify-center items-end w-full h-[65vh] md:h-[85vh] pointer-events-none mt-10">
           <img
             src="/foto_portofolio-removebg-preview.png"
             alt="Aditia Ihsan Akbar"
-            className="w-auto max-h-full object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] select-none pointer-events-auto scale-[1.4] md:scale-[1.8] origin-bottom translate-y-10 md:translate-y-16"
+            className="w-auto max-h-full object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] select-none pointer-events-auto scale-[1.2] md:scale-[1.4] origin-bottom translate-y-16 md:translate-y-24"
           />
         </div>
 
