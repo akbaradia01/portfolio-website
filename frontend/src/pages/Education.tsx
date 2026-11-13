@@ -1,3 +1,8 @@
+// --- TAMBAHKAN IMPORT GAMBAR DI SINI ---
+import logoUai from '../assets/LOGO_UAI.jpeg';
+import logoSma from '../assets/LOGO_SMA.jpeg';
+import logoSmp from '../assets/LOGO_SMPN250.png';
+
 export default function Education() {
   return (
     <section className="min-h-screen bg-[#0a0a0a] text-white py-24 px-6 md:px-14">
@@ -26,7 +31,8 @@ export default function Education() {
               {/* Info Kampus */}
               <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
-                  <img src="/LOGO_UAI.jpeg" alt="UAI Logo" className="w-full h-full object-contain" />
+                  {/* MENGGUNAKAN VARIABEL IMPORT */}
+                  <img src={logoUai} alt="UAI Logo" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
@@ -129,7 +135,8 @@ export default function Education() {
             
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
               <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
-                <img src="/LOGO_SMA.jpeg" alt="SMA Logo" className="w-full h-full object-contain" />
+                {/* MENGGUNAKAN VARIABEL IMPORT */}
+                <img src={logoSma} alt="SMA Logo" className="w-full h-full object-contain" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -153,7 +160,8 @@ export default function Education() {
             
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
               <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
-                <img src="/LOGO_SMPN250.png" alt="SMP Logo" className="w-full h-full object-contain" />
+                {/* MENGGUNAKAN VARIABEL IMPORT */}
+                <img src={logoSmp} alt="SMP Logo" className="w-full h-full object-contain" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
