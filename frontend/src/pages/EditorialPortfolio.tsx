@@ -1,6 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight, FiX, FiDownload } from 'react-icons/fi';
 import { FaWhatsapp, FaLinkedinIn, FaGithub } from 'react-icons/fa';
+
+// --- IMPORT GAMBAR LOGO (PASTI MUNCUL) ---
+import logoUai from '../assets/LOGO_UAI.jpeg';
+import logoSma from '../assets/LOGO_SMA.jpeg';
+import logoSmp from '../assets/LOGO_SMPN250.png';
 
 // ================= TIPE DATA =================
 interface ProjectItem {
@@ -76,67 +82,10 @@ const projectsList: ProjectItem[] = [
     demoUrl: '',
     repoUrl: '',
   },
-  {
-    id: 'graphichunter',
-    number: '05',
-    title: 'GraphicHunter',
-    category: 'DESIGN & DEVELOPMENT',
-    year: '2025',
-    image: '/work_01.jpg',
-    images: ['/work_01.jpg'],
-    description: 'Eksplorasi platform kurasi aset visual dan utilitas developer dengan layout grid fleksibel dan performa load tinggi.',
-    features: ['Kurasi aset digital berkualitas tinggi', 'Sistem pencarian tag cepat', 'Optimasi performa gambar'],
-    technologies: ['React', 'Next.js', 'Tailwind CSS'],
-    demoUrl: '',
-    repoUrl: '',
-  },
-  {
-    id: 'andy-hard',
-    number: '06',
-    title: 'Andy Hard',
-    category: 'WEB AND STRATEGY',
-    year: '2025',
-    image: '/work_02.jpg',
-    images: ['/work_02.jpg'],
-    description: 'Website portofolio agensi dan strategi digital kreatif yang menggabungkan storytelling editorial dengan animasi halus.',
-    features: ['Arsitektur informasi terstruktur', 'Animasi interaksi dinamis', 'Tipografi editorial kontras tinggi'],
-    technologies: ['TypeScript', 'Framer Motion', 'Tailwind'],
-    demoUrl: '',
-    repoUrl: '',
-  },
-  {
-    id: 'avivo',
-    number: '07',
-    title: 'AVIVO',
-    category: 'FILM PRODUCTION & MEDIA',
-    year: '2024',
-    image: '/work_03.jpg',
-    images: ['/work_03.jpg'],
-    description: 'Website showcase untuk rumah produksi film independen dengan dukungan galeri sinematik dan pemutaran showreel mulus.',
-    features: ['Galeri video responsif', 'Dark cinematic aesthetic', 'Optimasi aset beresolusi tinggi'],
-    technologies: ['React', 'Tailwind CSS', 'Vite'],
-    demoUrl: '',
-    repoUrl: '',
-  },
-  {
-    id: 'northline',
-    number: '08',
-    title: 'Northline',
-    category: 'BRAND & IDENTITY',
-    year: '2024',
-    image: '/work_04.jpg',
-    images: ['/work_04.jpg'],
-    description: 'Identitas merek digital dan platform web untuk studio arsitektur, menekankan ruang negatif, grid simetris, dan tipografi monokrom.',
-    features: ['Desain sistem monokromatik', 'Layout arsitektural minimalis', 'Navigasi intuitif'],
-    technologies: ['UI/UX', 'Figma', 'Webflow'],
-    demoUrl: '',
-    repoUrl: '',
-  },
 ];
 
 // ================= DATA PROSES KERJA =================
 type ProcessStep = 'define' | 'design' | 'deliver';
-
 interface StepInfo {
   id: ProcessStep;
   name: string;
@@ -146,30 +95,9 @@ interface StepInfo {
 }
 
 const processSteps: StepInfo[] = [
-  {
-    id: 'define',
-    name: 'DEFINE',
-    tag: '01 / DISCOVERY & SCOPE',
-    description:
-      'Setiap proyek dimulai dengan pertanyaan, bukan dengan desain. Aditia memetakan tujuan, pengguna, dan batasan teknis lebih dulu sehingga ruang lingkupnya jelas sebelum satu baris kode pun ditulis.',
-    image: '/process_define.jpg',
-  },
-  {
-    id: 'design',
-    name: 'DESIGN',
-    tag: '02 / ARCHITECTURE & UI',
-    description:
-      'Begitu parameter proyek ditetapkan, Aditia merancang solusi yang inovatif sekaligus memikat secara visual — menyusun prototipe dan antarmuka yang tidak hanya memenuhi, tetapi melampaui ekspektasi klien.',
-    image: '/process_design.jpg',
-  },
-  {
-    id: 'deliver',
-    name: 'DELIVER',
-    tag: '03 / CODE & DEPLOYMENT',
-    description:
-      'Desain yang disetujui diterjemahkan menjadi produk yang hidup: komponen yang rapi, performa yang diuji, dan peluncuran yang didampingi sampai benar-benar berjalan di tangan pengguna.',
-    image: '/process_deliver.jpg',
-  },
+  { id: 'define', name: 'DEFINE', tag: '01 / DISCOVERY & SCOPE', description: 'Setiap proyek dimulai dengan pertanyaan, bukan dengan desain. Aditia memetakan tujuan, pengguna, dan batasan teknis lebih dulu sehingga ruang lingkupnya jelas sebelum satu baris kode pun ditulis.', image: '/process_define.jpg' },
+  { id: 'design', name: 'DESIGN', tag: '02 / ARCHITECTURE & UI', description: 'Begitu parameter proyek ditetapkan, Aditia merancang solusi yang inovatif sekaligus memikat secara visual — menyusun prototipe dan antarmuka yang tidak hanya memenuhi, tetapi melampaui ekspektasi klien.', image: '/process_design.jpg' },
+  { id: 'deliver', name: 'DELIVER', tag: '03 / CODE & DEPLOYMENT', description: 'Desain yang disetujui diterjemahkan menjadi produk yang hidup: komponen yang rapi, performa yang diuji, dan peluncuran yang didampingi sampai benar-benar berjalan di tangan pengguna.', image: '/process_deliver.jpg' },
 ];
 
 export default function EditorialPortfolio() {
@@ -198,17 +126,6 @@ export default function EditorialPortfolio() {
     const offset = direction === 'left' ? -380 : 380;
     carouselRef.current.scrollBy({ left: offset, behavior: 'smooth' });
   };
-
-  const currentImages = selectedProject?.images && selectedProject.images.length > 0
-    ? selectedProject.images
-    : (selectedProject ? [selectedProject.image] : []);
-
-  const nextImage = () => setActiveImageIdx((prev) => (prev + 1) % currentImages.length);
-  const prevImage = () => setActiveImageIdx((prev) => (prev - 1 + currentImages.length) % currentImages.length);
-
-  useEffect(() => {
-    setActiveImageIdx(0);
-  }, [selectedProject]);
 
   const activeStepData = processSteps.find((s) => s.id === activeStep) || processSteps[0];
 
@@ -255,10 +172,7 @@ export default function EditorialPortfolio() {
       </header>
 
       {/* ================= 2. HERO SECTION ================= */}
-      <section
-        id="hero"
-        className="relative min-h-[92vh] md:min-h-screen bg-[#ececee] text-slate-950 flex flex-col justify-between pt-28 pb-10 px-6 md:px-14 overflow-hidden"
-      >
+      <section id="hero" className="relative min-h-[92vh] md:min-h-screen bg-[#ececee] text-slate-950 flex flex-col justify-between pt-28 pb-10 px-6 md:px-14 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
           <svg className="w-[120vw] max-w-[1100px] aspect-square" viewBox="0 0 1000 1000" fill="none">
             <circle cx="500" cy="500" r="180" stroke="#000" strokeWidth="1" strokeDasharray="4 4" />
@@ -286,12 +200,13 @@ export default function EditorialPortfolio() {
           </div>
         </div>
 
-        <div className="relative z-10 flex justify-center items-end h-[62vh] sm:h-[72vh] md:h-[82vh] pointer-events-none -mb-10">
+        {/* BAGIAN FOTO YANG DIPERBAIKI */}
+        <div className="relative z-10 flex justify-center items-end h-[60vh] sm:h-[70vh] md:h-[80vh] pointer-events-none -mb-4 md:-mb-10">
           <div className="relative h-full flex items-end justify-center pointer-events-auto">
             <img
               src="/aditia_cutout.png"
               alt="Aditia Ihsan Akbar"
-              className="h-full w-auto max-h-[82vh] object-contain object-bottom contrast-[1.05] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.25)] select-none"
+              className="w-auto max-h-[75vh] md:max-h-[85vh] object-contain object-bottom contrast-[1.1] brightness-[1.05] filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.2)] select-none"
             />
           </div>
         </div>
@@ -340,7 +255,7 @@ export default function EditorialPortfolio() {
         </div>
       </section>
 
-      {/* ================= 4. EDUCATION SECTION (MONOKROM & SMP DITAMBAHKAN) ================= */}
+      {/* ================= 4. EDUCATION SECTION ================= */}
       <section id="education" className="relative bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-6">
@@ -354,41 +269,90 @@ export default function EditorialPortfolio() {
             </h2>
           </div>
 
-          {/* Timeline Container */}
-          <div className="relative ml-4 md:ml-8 pl-8 md:pl-12 border-l-2 border-neutral-800 space-y-12">
+          <div className="relative ml-4 md:ml-8 pl-8 md:pl-12 border-l-2 border-neutral-800 space-y-16">
             
-            {/* Card 1: S1 */}
+            {/* CARD 1: S1 UAI */}
             <div className="relative group">
               <span className="absolute -left-[41px] md:-left-[57px] top-8 w-4 h-4 rounded-full bg-white ring-4 ring-[#0a0a0a] group-hover:scale-125 transition-transform" />
               
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-white/30 transition-colors">
-                <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
-                  <img src="/logo-uai.png" alt="UAI Logo" className="w-full h-full object-contain" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">S.KOM</span>
+              <div className="flex flex-col p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
+                
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                  <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
+                    <img src={logoUai} alt="UAI Logo" className="w-full h-full object-contain" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white">Bachelor of Informatics</h3>
-                  <p className="text-neutral-300 font-medium mb-3">Universitas Al Azhar Indonesia</p>
-                  <p className="text-neutral-400 text-sm leading-relaxed">
-                    Web development, software engineering, and system design.<br/>
-                    Structured programming, problem-solving, and scalable applications.
-                  </p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 text-white border border-white/20">S.KOM</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">Bachelor of Informatics</h3>
+                    <p className="text-neutral-300 font-medium mb-1">Universitas Al-Azhar Indonesia</p>
+                    <p className="text-neutral-400 text-sm leading-relaxed">
+                      Web development, software engineering, and system design.<br/>
+                      Structured programming, problem-solving, and scalable applications.
+                    </p>
+                  </div>
+                  <div className="md:text-right shrink-0 mt-2 md:mt-0">
+                    <span className="font-mono text-sm text-neutral-500 bg-neutral-900 px-4 py-1.5 rounded-lg border border-neutral-800">2021 — 2026</span>
+                  </div>
                 </div>
-                <div className="md:text-right shrink-0 mt-2 md:mt-0">
-                  <span className="font-mono text-sm text-neutral-500 bg-neutral-900 px-4 py-1.5 rounded-lg border border-neutral-800">2021 — 2026</span>
+
+                <hr className="border-neutral-800 my-8" />
+
+                <div>
+                  <p className="text-xs text-neutral-500 uppercase tracking-wider font-semibold mb-4">
+                    UNDERGRADUATE THESIS PROJECT:
+                  </p>
+
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-[#0a0a0a] p-6 rounded-2xl border border-neutral-800">
+                    <div className="flex-1 flex flex-col justify-center">
+                      <h4 className="text-base md:text-lg font-bold text-white leading-relaxed uppercase">
+                        KLASIFIKASI KELULUSAN TEPAT WAKTU MAHASISWA INFORMATIKA UNIVERSITAS AL-AZHAR INDONESIA
+                      </h4>
+                      <p className="text-xs text-cyan-400 mt-3 font-mono">
+                        Machine Learning | Klasifikasi Data | Data Science
+                      </p>
+                    </div>
+
+                    <div className="inline-block rounded-xl overflow-hidden border border-neutral-700 shadow-xl bg-black/40">
+                      <img 
+                        src="/foto_sidang.jpeg" 
+                        alt="Aditia Ihsan Akbar" 
+                        className="block w-full max-w-[240px] h-auto object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
+                      <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">Heatmap Korelasi</h5>
+                      <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                        <img src="/Heatmap_Korelasi.png" alt="Heatmap" className="w-full h-full object-contain" />
+                      </div>
+                    </div>
+                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
+                      <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">Confusion Matrix</h5>
+                      <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                        <img src="/Confusion_Matrix.png" alt="Confusion Matrix" className="w-full h-full object-contain" />
+                      </div>
+                    </div>
+                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-neutral-800 flex flex-col items-center transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:shadow-xl cursor-pointer group">
+                      <h5 className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-3 text-center w-full group-hover:text-white transition-colors">Hasil Evaluasi</h5>
+                      <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-800 bg-[#111] flex items-center justify-center">
+                        <img src="/Evaluasi.png" alt="Evaluasi" className="w-full h-full object-contain" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Card 2: SMK */}
+            {/* CARD 2: SMA */}
             <div className="relative group">
               <span className="absolute -left-[41px] md:-left-[57px] top-8 w-4 h-4 rounded-full bg-white ring-4 ring-[#0a0a0a] group-hover:scale-125 transition-transform" />
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-white/30 transition-colors">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
                 <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
-                  <img src="/logo-smk.png" alt="SMK Logo" className="w-full h-full object-contain" />
+                  <img src={logoSma} alt="SMA Logo" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
@@ -406,13 +370,12 @@ export default function EditorialPortfolio() {
               </div>
             </div>
 
-            {/* Card 3: SMP (BARU DITAMBAHKAN) */}
+            {/* CARD 3: SMP */}
             <div className="relative group">
               <span className="absolute -left-[41px] md:-left-[57px] top-8 w-4 h-4 rounded-full bg-white ring-4 ring-[#0a0a0a] group-hover:scale-125 transition-transform" />
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-white/30 transition-colors">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 md:p-8 rounded-3xl border border-neutral-800 bg-[#111] hover:border-neutral-600 transition-colors">
                 <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center p-2 shrink-0">
-                  <img src="/logo-smp.png" alt="SMP Logo" className="w-full h-full object-contain" />
+                  <img src={logoSmp} alt="SMP Logo" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
@@ -446,7 +409,7 @@ export default function EditorialPortfolio() {
         </div>
       </div>
 
-      {/* ================= 6. SELECTED WORKS SECTION ================= */}
+      {/* ================= 6. SELECTED WORKS SECTION (DENGAN 3D SLIDER) ================= */}
       <section id="works" className="relative bg-[#f8f8fa] text-slate-950 py-24 md:py-32 px-6 md:px-14 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-4">
@@ -685,77 +648,9 @@ export default function EditorialPortfolio() {
         </div>
       </footer>
 
-      {/* ================= MODAL DETAIL PROYEK ================= */}
+      {/* ================= MODAL 3D SLIDER PROYEK ================= */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6" role="dialog" aria-modal="true" onClick={() => setSelectedProject(null)}>
-          <div className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl bg-neutral-950 border border-neutral-800 text-white shadow-2xl p-6 md:p-8" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setSelectedProject(null)} className="absolute top-5 right-5 w-10 h-10 rounded-full bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-300 hover:text-white hover:bg-neutral-800 transition" aria-label="Tutup modal">
-              <FiX size={20} />
-            </button>
-
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 mb-6">
-              <img src={currentImages[activeImageIdx]} alt={selectedProject.title} className="w-full h-full object-contain" />
-              {currentImages.length > 1 && (
-                <>
-                  <button onClick={prevImage} aria-label="Gambar sebelumnya" className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/70 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-black transition">
-                    <FiChevronLeft size={18} />
-                  </button>
-                  <button onClick={nextImage} aria-label="Gambar berikutnya" className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/70 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-black transition">
-                    <FiChevronRight size={18} />
-                  </button>
-                  <span className="absolute bottom-3 right-3 rounded-full bg-black/70 backdrop-blur px-3 py-1 font-mono text-xs text-white">{activeImageIdx + 1} / {currentImages.length}</span>
-                </>
-              )}
-            </div>
-
-            {currentImages.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-4 mb-4 no-scrollbar">
-                {currentImages.map((src, i) => (
-                  <button key={src} onClick={() => setActiveImageIdx(i)} className={`w-16 h-12 rounded-lg overflow-hidden shrink-0 border-2 transition ${activeImageIdx === i ? 'border-white scale-105' : 'border-neutral-800 opacity-60 hover:opacity-100'}`}>
-                    <img src={src} alt="thumbnail" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-4">
-              <span className="font-mono text-xs uppercase tracking-widest text-neutral-500">{selectedProject.category} · {selectedProject.year}</span>
-              <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tight mt-1 text-white">{selectedProject.title}</h2>
-              <p className="mt-4 text-neutral-300 font-light leading-relaxed">{selectedProject.description}</p>
-
-              {selectedProject.features && selectedProject.features.length > 0 && (
-                <div className="mt-6">
-                  <h4 className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">FITUR UTAMA:</h4>
-                  <ul className="grid sm:grid-cols-2 gap-2 text-sm text-neutral-300">
-                    {selectedProject.features.map((feat) => (
-                      <li key={feat} className="flex items-center gap-2"><span className="text-white text-xs">✓</span> {feat}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {selectedProject.technologies.map((t) => (
-                  <span key={t} className="font-mono text-xs rounded-full border border-neutral-800 bg-neutral-900 px-3 py-1 text-neutral-300">{t}</span>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-4 pt-6 border-t border-neutral-800">
-                {selectedProject.demoUrl && (
-                  <a href={selectedProject.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 transition">
-                    Live Demo <FiArrowUpRight size={14} />
-                  </a>
-                )}
-                {selectedProject.repoUrl && (
-                  <a href={selectedProject.repoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 text-white px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition">
-                    Source Code <FaGithub size={14} />
-                  </a>
-                )}
-                <button onClick={() => setSelectedProject(null)} className="rounded-full border border-neutral-800 px-5 py-2.5 text-xs font-mono uppercase text-neutral-400 hover:text-white transition">Tutup</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ModalProject project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}
 
       {/* ================= MODAL "HIRE ME" ================= */}
@@ -808,5 +703,160 @@ export default function EditorialPortfolio() {
       )}
 
     </div>
+  );
+}
+
+// ================= KOMPONEN MODAL PROYEK (3D COVERFLOW SLIDER) =================
+function ModalProject({ project, onClose }: { project: ProjectItem; onClose: () => void }) {
+  const [index, setIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+
+  const images = project.images && project.images.length > 0 ? project.images : [project.image];
+  const total = images.length;
+
+  const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') prev();
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = oldOverflow;
+    };
+  }, [prev, next, onClose]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+    touchStartX.current = null;
+  };
+
+  const half = Math.floor(total / 2);
+  const offsetOf = (i: number) => ((i - index + total + half) % total) - half;
+
+  const arrowClass = "absolute top-1/2 z-30 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-3.5 text-white backdrop-blur transition hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400";
+
+  const ArrowLeft = (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <path d="M15 5l-7 7 7 7" />
+    </svg>
+  );
+  const ArrowRight = (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <path d="M9 5l7 7-7 7" />
+    </svg>
+  );
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,#1d0f3a_0%,#07040f_75%)]"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Background 3D Slider (Foto-foto) */}
+      <div className="pointer-events-none relative h-full w-full" style={{ perspective: '1600px' }}>
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+          {images.map((src, i) => {
+            const d = offsetOf(i);
+            const a = Math.abs(d);
+            const visible = a <= 2;
+            return (
+              <div
+                key={src}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (d !== 0) setIndex(i);
+                }}
+                className={`absolute w-[min(72vw,600px)] aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl shadow-black/60 ${
+                  d === 0 ? 'cursor-default' : 'cursor-pointer'
+                }`}
+                style={{
+                  transform: `translateX(${d * 100}%) translateZ(${-a * 200}px) rotateY(${-d * 38}deg) scale(${1 - a * 0.06})`,
+                  opacity: visible ? 1 : 0,
+                  filter: `brightness(${Math.max(0.25, 1 - a * 0.42)})`,
+                  zIndex: 20 - a,
+                  pointerEvents: visible ? 'auto' : 'none',
+                  transition: 'transform .6s cubic-bezier(.22,.8,.3,1), opacity .6s, filter .6s',
+                }}
+                aria-hidden={d !== 0}
+              >
+                <img
+                  src={src}
+                  alt={`${project.title} - foto ${i + 1}`}
+                  draggable={false}
+                  className="h-full w-full select-none object-contain"
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Tombol Navigasi Slider */}
+      {total > 1 && (
+        <>
+          <button type="button" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Foto sebelumnya" className={`${arrowClass} left-3 md:left-8`}>
+            {ArrowLeft}
+          </button>
+          <button type="button" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Foto berikutnya" className={`${arrowClass} right-3 md:right-8`}>
+            {ArrowRight}
+          </button>
+          <span className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 font-mono text-sm text-white backdrop-blur">
+            {index + 1} / {total}
+          </span>
+        </>
+      )}
+
+      {/* Info Proyek (Di Bawah Slider) */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-40 bg-black/80 p-6 md:p-8 backdrop-blur-md border-t border-white/10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">
+              {project.category} · {project.year}
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl uppercase tracking-tight mt-1 text-white">
+              {project.title}
+            </h2>
+            <p className="mt-2 text-sm text-neutral-300 font-light line-clamp-2">
+              {project.description}
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap gap-3 shrink-0">
+            {project.demoUrl && (
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 transition">
+                Live Demo <FiArrowUpRight size={14} />
+              </a>
+            )}
+            {project.repoUrl && (
+              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 text-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-neutral-800 transition">
+                Source Code <FaGithub size={14} />
+              </a>
+            )}
+            <button onClick={onClose} className="rounded-full border border-neutral-800 px-5 py-2.5 text-xs font-mono uppercase text-neutral-400 hover:text-white transition">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
   );
 }
