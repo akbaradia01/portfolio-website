@@ -34,10 +34,11 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 hidden md:block overflow-hidden">
-      {/* Titik utama kursor */}
+    // z-index diturunkan menjadi z-40 agar tidak menutupi Navbar (z-50)
+    <div className="pointer-events-none fixed inset-0 z-40 hidden md:block overflow-hidden">
+      {/* Titik utama kursor - Diubah menjadi Putih */}
       <motion.div
-        className="absolute top-0 left-0 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"
+        className="absolute top-0 left-0 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"
         animate={{
           x: mousePosition.x - 6,
           y: mousePosition.y - 6,
@@ -46,9 +47,9 @@ export default function CustomCursor() {
         transition={{ type: "spring", stiffness: 800, damping: 35 }}
       />
       
-      {/* Lingkaran luar pendaran (Glow trailing) */}
+      {/* Lingkaran luar pendaran (Glow trailing) - Diubah menjadi Putih */}
       <motion.div
-        className="absolute top-0 left-0 w-8 h-8 border border-cyan-400/50 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+        className="absolute top-0 left-0 w-8 h-8 border border-white/50 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.4)]"
         animate={{
           x: mousePosition.x - 16,
           y: mousePosition.y - 16,

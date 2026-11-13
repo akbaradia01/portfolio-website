@@ -8,7 +8,6 @@ import Portfolio from './pages/Portfolio';
 import TechStack from './components/TechStack';
 import Contact from './pages/Contact';
 import EditorialPortfolio from './pages/EditorialPortfolio';
-import CustomCursor from './components/CustomCursor';
 import BackgroundMusic from './components/BackgroundMusic';
 import { profile } from './data/profile';
 
@@ -70,7 +69,6 @@ export default function App() {
         v7_relativeSplatPath: true,
       }}
     >
-      <CustomCursor />
       <BackgroundMusic />
       <ScrollToTop />
       <MainLayout />

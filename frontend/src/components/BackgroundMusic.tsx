@@ -37,7 +37,7 @@ export default function BackgroundMusic() {
         onClick={togglePlay}
         className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 backdrop-blur-md shadow-lg ${
           isPlaying 
-            ? 'bg-cyan-500/20 border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)] animate-pulse' 
+            ? 'bg-white/10 border-white text-white shadow-[0_0_15px_rgba(255,255,255,0.3)] animate-pulse' 
             : 'bg-[#111827]/80 border-white/10 text-slate-400 hover:text-white hover:border-white/30'
         }`}
         title={isPlaying ? "Matikan Musik" : "Putar Musik Latar"}

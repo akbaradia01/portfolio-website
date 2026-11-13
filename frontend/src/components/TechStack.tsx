@@ -30,15 +30,15 @@ export default function TechStack() {
   };
 
   return (
-        <section id="services" className="min-h-screen bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
+    <section id="services" className="min-h-screen bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
       <div className="mx-auto max-w-6xl">
         
-        {/* HEADER SECTION */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+        {/* HEADER SECTION - DIPERBARUI */}
+        <div className="mb-16">
+          <h1 className="font-display text-6xl sm:text-8xl md:text-[8rem] leading-[0.9] uppercase tracking-tighter text-white hover:text-transparent hover:[-webkit-text-stroke:2px_white] transition-all duration-500 cursor-default select-none mb-4">
             Tech Stack
           </h1>
-          <p className="text-slate-400 text-sm mt-4 max-w-2xl">
+          <p className="text-neutral-500 text-sm md:text-base mt-4 max-w-2xl transition-colors duration-300 hover:text-white cursor-default font-light leading-relaxed">
             Here are the technologies, programming languages, and tools I usually use to design and build a web project. Click the cards to see what they do.
           </p>
         </div>
@@ -62,17 +62,17 @@ export default function TechStack() {
                 >
                   
                   {/* SISI DEPAN KARTU */}
-                  <div className="absolute inset-0 backface-hidden w-full h-full bg-[#111827] border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-center gap-3 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-colors">
+                  <div className="absolute inset-0 backface-hidden w-full h-full bg-[#111] border border-white/30 rounded-2xl p-5 flex flex-col items-center justify-center gap-3 group-hover:border-white group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300">
                     <div>{tech.icon}</div>
-                    <span className="font-bold text-sm tracking-wide text-slate-200">{tech.name}</span>
-                    <span className="text-[10px] text-cyan-400 font-mono">Klik untuk detail ↻</span>
+                    <span className="font-bold text-sm tracking-wide text-neutral-400 group-hover:text-white transition-colors duration-300">{tech.name}</span>
+                    <span className="text-[10px] text-neutral-500 group-hover:text-white font-mono transition-colors duration-300">Klik untuk detail ↻</span>
                   </div>
 
                   {/* SISI BELAKANG KARTU */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 w-full h-full bg-[#1e293b] border border-cyan-500/50 rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-lg shadow-cyan-500/20">
-                    <h4 className="text-sm font-bold text-cyan-400 uppercase tracking-wider mb-2">{tech.name}</h4>
-                    <p className="text-xs text-slate-200 leading-relaxed">{tech.desc}</p>
-                    <span className="text-[10px] text-cyan-400 mt-3 font-mono">Klik untuk kembali ✕</span>
+                  <div className="absolute inset-0 backface-hidden rotate-y-180 w-full h-full bg-[#1e293b] border border-white rounded-2xl p-4 flex flex-col items-center justify-center text-center shadow-lg shadow-white/10">
+                    <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2">{tech.name}</h4>
+                    <p className="text-xs text-neutral-300 leading-relaxed">{tech.desc}</p>
+                    <span className="text-[10px] text-neutral-400 mt-3 font-mono hover:text-white transition-colors duration-300">Klik untuk kembali ✕</span>
                   </div>
 
                 </div>

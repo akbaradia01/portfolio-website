@@ -74,7 +74,7 @@ const projectsList: ProjectItem[] = [
   },
 ];
 
-// ================= DATA SERTIFIKAT (BARU) =================
+// ================= DATA SERTIFIKAT =================
 const certificatesList: ProjectItem[] = [
   {
     id: 'kemen-pu',
@@ -92,22 +92,6 @@ const certificatesList: ProjectItem[] = [
   },
 ];
 
-// ================= DATA PROSES KERJA =================
-type ProcessStep = 'define' | 'design' | 'deliver';
-interface StepInfo {
-  id: ProcessStep;
-  name: string;
-  description: string;
-  image: string;
-  tag: string;
-}
-
-const processSteps: StepInfo[] = [
-  { id: 'define', name: 'DEFINE', tag: '01 / DISCOVERY & SCOPE', description: 'Setiap proyek dimulai dengan pertanyaan, bukan dengan desain. Aditia memetakan tujuan, pengguna, dan batasan teknis lebih dulu sehingga ruang lingkupnya jelas sebelum satu baris kode pun ditulis.', image: '/process_define.jpg' },
-  { id: 'design', name: 'DESIGN', tag: '02 / ARCHITECTURE & UI', description: 'Begitu parameter proyek ditetapkan, Aditia merancang solusi yang inovatif sekaligus memikat secara visual — menyusun prototipe dan antarmuka yang tidak hanya memenuhi, tetapi melampaui ekspektasi klien.', image: '/process_design.jpg' },
-  { id: 'deliver', name: 'DELIVER', tag: '03 / CODE & DEPLOYMENT', description: 'Desain yang disetujui diterjemahkan menjadi produk yang hidup: komponen yang rapi, performa yang diuji, dan peluncuran yang didampingi sampai benar-benar berjalan di tangan pengguna.', image: '/process_deliver.jpg' },
-];
-
 // ================= DATA GAMBAR SKRIPSI =================
 const thesisImagesData = [
   { title: 'Heatmap Korelasi', image: '/Heatmap_Korelasi.png', desc: 'Analisis korelasi antar fitur akademik terhadap status kelulusan.' },
@@ -116,7 +100,6 @@ const thesisImagesData = [
 ];
 
 export default function EditorialPortfolio() {
-  const [activeStep, setActiveStep] = useState<ProcessStep>('define');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [hireModalOpen, setHireModalOpen] = useState(false);
   
@@ -142,13 +125,13 @@ export default function EditorialPortfolio() {
     setScrollProgress(progress);
   };
 
-  const scrollCarousel = (direction: 'left' | 'right') => {
-    if (!carouselRef.current) return;
-    const offset = direction === 'left' ? -380 : 380;
-    carouselRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+  // Fungsi untuk mengganti tab dan mereset scroll carousel ke awal
+  const changeTab = (tab: 'works' | 'certificates') => {
+    setActiveTab(tab);
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+    }
   };
-
-  const activeStepData = processSteps.find((s) => s.id === activeStep) || processSteps[0];
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 selection:bg-black selection:text-white antialiased font-sans">
@@ -176,6 +159,7 @@ export default function EditorialPortfolio() {
               { href: '#education', label: 'EDUCATION' },
               { href: '#works', label: 'PORTFOLIO' },
               { href: '#services', label: 'TECH STACK' },
+              { href: '#contact', label: 'CONTACT' },
             ]}
           />
 
@@ -240,7 +224,7 @@ export default function EditorialPortfolio() {
       <section id="about" className="relative bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-6">
-            <span className="font-mono text-xs tracking-widest text-neutral-500">02/06</span>
+            <span className="font-mono text-xs tracking-widest text-neutral-500">02/05</span>
           </div>
 
           <div className="grid md:grid-cols-12 gap-10 items-start">
@@ -276,7 +260,7 @@ export default function EditorialPortfolio() {
       <section id="education" className="relative bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-6">
-            <span className="font-mono text-xs tracking-widest text-neutral-500">03/06</span>
+            <span className="font-mono text-xs tracking-widest text-neutral-500">03/05</span>
           </div>
 
           <div className="mb-16">
@@ -427,7 +411,7 @@ export default function EditorialPortfolio() {
       <section id="works" className="relative bg-[#f8f8fa] text-slate-950 py-24 md:py-32 px-6 md:px-14 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-4">
-            <span className="font-mono text-xs tracking-widest text-slate-400">04/06</span>
+            <span className="font-mono text-xs tracking-widest text-slate-400">04/05</span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -452,11 +436,11 @@ export default function EditorialPortfolio() {
             </div>
           </div>
 
-          {/* TAB MENU UI */}
+          {/* TAB MENU UI DENGAN FUNGSI PANAH BARU */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-8">
             <div className="flex gap-8">
               <button 
-                onClick={() => setActiveTab('works')}
+                onClick={() => changeTab('works')}
                 className={`font-mono text-xs font-bold uppercase tracking-widest transition-all pb-2 border-b-2 ${
                   activeTab === 'works' ? 'text-slate-900 border-slate-900' : 'text-slate-400 border-transparent hover:text-slate-600'
                 }`}
@@ -464,7 +448,7 @@ export default function EditorialPortfolio() {
                 SELECTED WORKS
               </button>
               <button 
-                onClick={() => setActiveTab('certificates')}
+                onClick={() => changeTab('certificates')}
                 className={`font-mono text-xs font-bold uppercase tracking-widest transition-all pb-2 border-b-2 ${
                   activeTab === 'certificates' ? 'text-slate-900 border-slate-900' : 'text-slate-400 border-transparent hover:text-slate-600'
                 }`}
@@ -474,10 +458,22 @@ export default function EditorialPortfolio() {
             </div>
 
             <div className="flex items-center gap-2">
-              <button onClick={() => scrollCarousel('left')} className="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 hover:border-slate-400 hover:bg-slate-200 hover:text-black transition focus:outline-none">
+              <button 
+                onClick={() => changeTab('works')} 
+                className={`w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center transition focus:outline-none ${
+                  activeTab === 'works' ? 'opacity-30 cursor-not-allowed' : 'text-slate-700 hover:border-slate-400 hover:bg-slate-200 hover:text-black'
+                }`}
+                disabled={activeTab === 'works'}
+              >
                 <FiChevronLeft size={16} />
               </button>
-              <button onClick={() => scrollCarousel('right')} className="w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center text-slate-700 hover:border-slate-400 hover:bg-slate-200 hover:text-black transition focus:outline-none">
+              <button 
+                onClick={() => changeTab('certificates')} 
+                className={`w-9 h-9 rounded-full border border-slate-300 flex items-center justify-center transition focus:outline-none ${
+                  activeTab === 'certificates' ? 'opacity-30 cursor-not-allowed' : 'text-slate-700 hover:border-slate-400 hover:bg-slate-200 hover:text-black'
+                }`}
+                disabled={activeTab === 'certificates'}
+              >
                 <FiChevronRight size={16} />
               </button>
             </div>
@@ -510,69 +506,14 @@ export default function EditorialPortfolio() {
         </div>
       </section>
 
-      {/* ================= 7. INTERACTIVE PROCESS SECTION ================= */}
-      <section id="process" className="relative bg-[#0a0a0a] text-white py-24 md:py-36 px-6 md:px-14 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex justify-end mb-6">
-            <span className="font-mono text-xs tracking-widest text-neutral-500">05/06</span>
-          </div>
-
-          <div className="grid md:grid-cols-12 gap-12 items-center">
-            <div className="md:col-span-6 flex flex-col justify-center">
-              <div className="flex items-center gap-6">
-                <div className="flex flex-col gap-8 py-2">
-                  {processSteps.map((s) => (
-                    <button
-                      key={s.id}
-                      onClick={() => setActiveStep(s.id)}
-                      aria-label={`Pilih tahap ${s.name}`}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 focus:outline-none ${activeStep === s.id ? 'bg-white scale-125 ring-4 ring-white/20' : 'bg-neutral-700 hover:bg-neutral-500'}`}
-                    />
-                  ))}
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  {processSteps.map((s) => {
-                    const isActive = activeStep === s.id;
-                    return (
-                      <button
-                        key={s.id}
-                        onClick={() => setActiveStep(s.id)}
-                        onMouseEnter={() => setActiveStep(s.id)}
-                        className={`text-left font-display text-6xl sm:text-7xl md:text-8xl uppercase tracking-tighter leading-none transition-all duration-300 focus:outline-none ${isActive ? 'text-white translate-x-2' : 'text-neutral-700 hover:text-neutral-400'}`}
-                      >
-                        {s.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="mt-10 pl-9 max-w-lg min-h-[110px]">
-                <p className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-2">{activeStepData.tag}</p>
-                <p className="text-base md:text-lg font-light text-neutral-300 leading-relaxed transition-opacity duration-300">{activeStepData.description}</p>
-              </div>
-            </div>
-
-            <div className="md:col-span-6">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-2xl">
-                <img key={activeStepData.image} src={activeStepData.image} alt={activeStepData.name} className="w-full h-full object-cover animate-fadeUp duration-500" />
-                <div className="absolute top-4 left-4 rounded-md bg-black/60 backdrop-blur px-3 py-1 font-mono text-xs text-white uppercase tracking-wider">{activeStepData.name} PHASE</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= 8. SERVICES & CAPABILITIES HIGHLIGHT (#services) ================= */}
-      {/* BAGIAN INI SUDAH DIGANTI DENGAN KOMPONEN TECHSTACK */}
+      {/* ================= 7. TECH STACK (#services) ================= */}
       <TechStack />
 
-      {/* ================= 9. GRAND EDITORIAL FOOTER ================= */}
+      {/* ================= 8. GRAND EDITORIAL FOOTER ================= */}
       <footer id="contact" className="relative bg-[#050505] text-white pt-24 pb-12 px-6 md:px-14 border-t border-white/5 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-end mb-8">
-            <span className="font-mono text-xs tracking-widest text-neutral-500">06/06</span>
+            <span className="font-mono text-xs tracking-widest text-neutral-500">05/05</span>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-20 text-xs">
@@ -638,7 +579,7 @@ export default function EditorialPortfolio() {
           </div>
 
           <div className="w-full overflow-hidden select-none my-8">
-            <h1 className="font-display text-[19vw] leading-none text-white tracking-tighter text-center uppercase whitespace-nowrap">
+            <h1 className="font-display text-[19vw] leading-none text-white tracking-wider text-center uppercase whitespace-nowrap">
               ADITIA
             </h1>
           </div>
@@ -998,7 +939,6 @@ function Typewriter({ text, speed = 25, startDelay = 500 }: { text: string; spee
       intervalId = setInterval(() => {
         if (i < text.length) {
           i++;
-          // PERBAIKAN: Menggunakan slice agar huruf tidak ada yang terlewat
           setDisplayedText(text.slice(0, i)); 
         } else {
           clearInterval(intervalId);
