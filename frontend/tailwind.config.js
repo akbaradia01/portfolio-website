@@ -4,11 +4,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Anton', 'Bebas Neue', 'sans-serif'],
+        condensed: ['Bebas Neue', 'Anton', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
         ink: { 950: '#05070d', 900: '#0a0e17', 800: '#101624', 700: '#1a2234' },
+        canvas: { DEFAULT: '#f4f4f5', muted: '#e4e4e7', dark: '#0a0a0a', darker: '#050505' },
         accent: { DEFAULT: '#22d3ee', violet: '#a78bfa' },
       },
       keyframes: {

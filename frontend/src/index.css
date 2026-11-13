@@ -4,14 +4,63 @@
 
 @layer base {
   html {
+    scroll-behavior: smooth;
     color-scheme: dark;
   }
   body {
-    @apply bg-ink-950 font-sans text-slate-200 antialiased;
+    @apply bg-[#0a0a0a] font-sans text-slate-200 antialiased;
   }
   ::selection {
-    @apply bg-accent/30 text-white;
+    @apply bg-black text-white;
   }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqueeReverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee-fast {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee 16s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeReverse 30s linear infinite;
+}
+
+/* Hide scrollbar for clean carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @layer components {
